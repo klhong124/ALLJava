@@ -6,6 +6,7 @@ public class test {
 		foodMenu.getRestaurantMenu();
 		HashMapRestaurantMenu drinkMenu = new HashMapRestaurantMenu();
 		drinkMenu.HashMapRestaurantMenu("drink");
+		drinkMenu.getRestaurantMenu();
 	}
 }
 
@@ -43,7 +44,7 @@ public class HashMapRestaurantMenu {
 	         	System.out.println("Enter Y to continue");
 	    	    String YorN = input.nextLine();
 	    	    char yn = YorN.charAt(0);
-	    	    YN=(yn=='Y')?true:false;
+	    	    YN=(yn=='Y'|yn=='y')?true:false;
 		}
 	 }	
 
