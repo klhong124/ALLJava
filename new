@@ -9,6 +9,10 @@ public class test {
 	}
 }
 
+/** there are two java files*/
+
+import java.util.HashMap;
+import java.util.Scanner;
 public class HashMapRestaurantMenu {
 	private Scanner input;
 	private String type;
