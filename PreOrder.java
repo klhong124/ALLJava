@@ -1,19 +1,32 @@
+package ALLJava;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class PreOrder {
   public static void main(String[] args) {
-  	int role = getRole();// 問使用者係店主還是顧客
+	  
+		HashMapRestaurantMenu foodMenu = new HashMapRestaurantMenu();
+		HashMapRestaurantMenu drinkMenu = new HashMapRestaurantMenu();
+		HashMapRestaurantMenu setMenu = new HashMapRestaurantMenu();
+		foodMenu.EditRestaurantMenu("Food");	
+		foodMenu.ShowRestaurantMenu();
+		foodMenu.test();
+		foodMenu.RemoveRestaurantMenu();
+		foodMenu.ShowRestaurantMenu();
+		drinkMenu.EditRestaurantMenu("Drink");}}
+		
+		
+  /*	int role = getRole();// å•�ä½¿ç”¨è€…ä¿‚åº—ä¸»é‚„æ˜¯é¡§å®¢
 
-    if (role == 1) { //如果是店主
-      int addSetChoice = askAddSetOrNot(); //問店主是否增設set
-      ArrayList setList = new ArrayList(); //開一個set的list
-      while (addSetChoice == 1) { //如果店主想增設set
-        setList.add(addSet()); //input每一個set再將每一個set放入set的list
-        int addComponentChoice = askAddComponentOrNot(); //問店主是否增設component
-        while (addComponentChoice == 1) { //如果店主想增設component
-          setList.add(addComponent()); // input每一個component再將每一個component加入set的list
-          System.out.println(setList);// 比自己睇下成唔成功only
+    if (role == 1) { //å¦‚æžœæ˜¯åº—ä¸»
+      int addSetChoice = askAddSetOrNot(); //å•�åº—ä¸»æ˜¯å�¦å¢žè¨­set
+      ArrayList setList = new ArrayList(); //é–‹ä¸€å€‹setçš„list
+      while (addSetChoice == 1) { //å¦‚æžœåº—ä¸»æƒ³å¢žè¨­set
+        setList.add(addSet()); //inputæ¯�ä¸€å€‹setå†�å°‡æ¯�ä¸€å€‹setæ”¾å…¥setçš„list
+        int addComponentChoice = askAddComponentOrNot(); //å•�åº—ä¸»æ˜¯å�¦å¢žè¨­component
+        while (addComponentChoice == 1) { //å¦‚æžœåº—ä¸»æƒ³å¢žè¨­component
+          setList.add(addComponent()); // inputæ¯�ä¸€å€‹componentå†�å°‡æ¯�ä¸€å€‹componentåŠ å…¥setçš„list
+          System.out.println(setList);// æ¯”è‡ªå·±ç�‡ä¸‹æˆ�å””æˆ�åŠŸonly
         }
       }
       PrintStream out = new PrintStream(new FileOutputStream("Output.txt"));
@@ -72,4 +85,4 @@ public class PreOrder {
   	}
     return componentList;
   }
-}
+}*/
