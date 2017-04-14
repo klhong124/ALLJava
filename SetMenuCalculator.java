@@ -13,13 +13,15 @@ public class SetMenuCalculator extends PreOrder{
 							   "Enter the number to select\n"+
 							   "Enter \"done\" to comfirm the selection+"+
 							   "Enter \"all\" to select all items.");
-			String NumberDoneAll = input.nextLine(); 
+			
 			for(int looptimes = 0;looptimes< drinkMenu.ReadOrderItem().length;looptimes++){
-				if (NumberDoneAll=="done"){break;}
-				if (NumberDoneAll=="all"){drinkMenu.ShowRestaurantMenu();}
-				else{}
+				drinkMenu.ShowRestaurantMenu();
+				String NumberDoneAll = input.nextLine(); 
+				if (NumberDoneAll.equals("done")){break;
+				}	else if (NumberDoneAll.equals("all")){drinkMenu.SelectRestaurantMenu(NumberDoneAll);break;
+				}	else{drinkMenu.SelectRestaurantMenu(NumberDoneAll);
 				}
-			}
+			}}}
 		
-	}
+	
 
