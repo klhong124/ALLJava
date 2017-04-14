@@ -1,19 +1,24 @@
 package ALLJava;
-import java.util.Scanner;
-import java.util.ArrayList;
 
 public class PreOrder {
+	static HashMapRestaurantMenu foodMenu  = new HashMapRestaurantMenu();
+	static HashMapRestaurantMenu drinkMenu  = new HashMapRestaurantMenu();
+	static SetMenuCalculator setMenu   = new SetMenuCalculator();
   public static void main(String[] args) {
-	  
-		HashMapRestaurantMenu foodMenu = new HashMapRestaurantMenu();
-		HashMapRestaurantMenu drinkMenu = new HashMapRestaurantMenu();
-		HashMapRestaurantMenu setMenu = new HashMapRestaurantMenu();
-		foodMenu.EditRestaurantMenu("Food");	
-		foodMenu.ShowRestaurantMenu();
-		foodMenu.test();
+		drinkMenu.EditRestaurantMenu("Food");	
+		drinkMenu.ShowRestaurantMenu();
+		drinkMenu.CreateColdDrinkMenu();
+		drinkMenu.ShowRestaurantMenu();
+		setMenu.SetMenuCalculatorHelper();
 		foodMenu.RemoveRestaurantMenu();
 		foodMenu.ShowRestaurantMenu();
-		drinkMenu.EditRestaurantMenu("Drink");}}
+		drinkMenu.EditRestaurantMenu("Drink");
+		drinkMenu.ShowRestaurantMenu();
+		drinkMenu.RemoveRestaurantMenu();
+	    drinkMenu.ShowRestaurantMenu();
+		foodMenu.EditRestaurantMenu("Food");
+		foodMenu.ShowRestaurantMenu();}  }
+  
 		
 		
   /*	int role = getRole();// å•�ä½¿ç”¨è€…ä¿‚åº—ä¸»é‚„æ˜¯é¡§å®¢
