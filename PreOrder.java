@@ -1,93 +1,49 @@
 package ALLJava;
+import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
 
 public class PreOrder {
-	static HashMapRestaurantMenu foodMenu  = new HashMapRestaurantMenu();
+	static HashMapRestaurantMenu foodMenu   = new HashMapRestaurantMenu();
 	static HashMapRestaurantMenu drinkMenu  = new HashMapRestaurantMenu();
-	static SetMenuCalculator setMenu   = new SetMenuCalculator();
-  public static void main(String[] args) {
-		drinkMenu.EditRestaurantMenu("Food");	
-		drinkMenu.ShowRestaurantMenu();
-		drinkMenu.CreateColdDrinkMenu();
-		drinkMenu.ShowRestaurantMenu();
-		setMenu.SetMenuCalculatorHelper();
-		foodMenu.RemoveRestaurantMenu();
-		foodMenu.ShowRestaurantMenu();
-		drinkMenu.EditRestaurantMenu("Drink");
-		drinkMenu.ShowRestaurantMenu();
-		drinkMenu.RemoveRestaurantMenu();
-	    drinkMenu.ShowRestaurantMenu();
-		foodMenu.EditRestaurantMenu("Food");
-		foodMenu.ShowRestaurantMenu();}  }
+	static HashMapRestaurantMenu setMenu    = new HashMapRestaurantMenu();
+	private static Scanner input;
+  public static void main(String[] args) throws IOException {
+	    input = new Scanner(System.in);
+	    System.out.println("Welcome to HereRice.\n"
+	    		+ "Enter OneDrivePath To get Started");
+	    String OneDrivePath=input.nextLine();
+	    System.out.println("If you want to edit your RestaurantMenu,\n"
+	    		+ "Enter your ShopID to login.\n"
+	    		+ "otherwise, Enter \"i am new\" to sign up.");
+	    String LoginSignUp=input.nextLine();
+	    if(LoginSignUp.equals("i am new")){
+	    	  System.out.print("Enter a ShopID.");
+	    	  String ShopID=input.nextLine();
+	    	  File folder=new File(OneDrivePath+ShopID);
+	    	  while(true){
+	    	  if(!folder.exists()){new File(OneDrivePath+"\\"+ShopID).mkdir();break;}
+	    	  else{System.out.print("This ShopID is already used.");}}
+	    	  System.out.println("Welcome,"+ShopID+".\n"
+	    	  		+ "HereRice is an API that makes you and your restaurant famous.\n"
+	    	  		+ "Customers are able to order your food through HereRice."
+	    	  		+ "To start with, Let's create a food Menu.\n"
+	    	  		+ "You can edit your menu later on. ARE YOU READY??\n"
+	    	  		+ "plase Enter to continue");
+	    	  input.nextLine();
+	    	  foodMenu.AddRestaurantMenu("Food");
+	    	  foodMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "FoodMenu");
+	    	  System.out.println("Congratulation!!\n"
+	    	  		+ "you have been created a Food Menu\n"
+	    	  		+ "Let's create a Drink Menu\n"
+	    	  		+ "plase Enter to continue");
+	    	  input.nextLine();
+	    	  drinkMenu.AddRestaurantMenu("Drink");	
+	    	  drinkMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "DrinkMenu");
+	    	  System.out.println("Congratulation!!\n"
+		    	  		+ "you have been created a Drink Menu\n"
+		    	  		+ "Now, you can combine your Food Menu and ");
+		setMenu.CreateSetMenu(foodMenu.ReadRestaurantMenu(), drinkMenu.ReadRestaurantMenu());
+		
   
-		
-		
-  /*	int role = getRole();// å•�ä½¿ç”¨è€…ä¿‚åº—ä¸»é‚„æ˜¯é¡§å®¢
-
-    if (role == 1) { //å¦‚æžœæ˜¯åº—ä¸»
-      int addSetChoice = askAddSetOrNot(); //å•�åº—ä¸»æ˜¯å�¦å¢žè¨­set
-      ArrayList setList = new ArrayList(); //é–‹ä¸€å€‹setçš„list
-      while (addSetChoice == 1) { //å¦‚æžœåº—ä¸»æƒ³å¢žè¨­set
-        setList.add(addSet()); //inputæ¯�ä¸€å€‹setå†�å°‡æ¯�ä¸€å€‹setæ”¾å…¥setçš„list
-        int addComponentChoice = askAddComponentOrNot(); //å•�åº—ä¸»æ˜¯å�¦å¢žè¨­component
-        while (addComponentChoice == 1) { //å¦‚æžœåº—ä¸»æƒ³å¢žè¨­component
-          setList.add(addComponent()); // inputæ¯�ä¸€å€‹componentå†�å°‡æ¯�ä¸€å€‹componentåŠ å…¥setçš„list
-          System.out.println(setList);// æ¯”è‡ªå·±ç�‡ä¸‹æˆ�å””æˆ�åŠŸonly
-        }
-      }
-      PrintStream out = new PrintStream(new FileOutputStream("Output.txt"));
-      System.setOut(out);
-    }
-  }
-
-  private static int getRole() {
-    System.out.println("What is your role?");
-    System.out.println("1) Store owners\n2) customers");
-    System.out.println("1 or 2?");
-    Scanner input = new Scanner(System.in);
-    return input.nextInt();
-  }
-
-  private static int askAddSetOrNot() {
-    System.out.println("Type 1 if you want to add set for your restaurant\notherwise type 0");
-    Scanner input = new Scanner(System.in);
-    return input.nextInt();
-  }
-
-  private static ArrayList addSet() {
-    ArrayList set = new ArrayList();
-    Scanner input = new Scanner(System.in);
-    System.out.println("Input the name of the set.");
-    String setName = input.nextLine();
-    System.out.println("Input the price of the set.");
-    float setPrice = input.nextFloat();
-    set.add(setName);
-    set.add(setPrice);
-    return set;
-  }
-
-  private static int askAddComponentOrNot() {
-    System.out.println("Type 1 if you want to add component\notherwise type 0");
-    Scanner input = new Scanner(System.in);
-    return input.nextInt();
-  }
-
-  private static ArrayList addComponent() {
-  	ArrayList componentList = new ArrayList();
-  	System.out.println("What is the type of component?");
-    Scanner input = new Scanner(System.in);
-  	String componentType = input.nextLine();
-  	componentList.add(componentType);
-  	int option = 0;
-  	while (option != 1) {
-  		System.out.println("Component name: ");
-  		String component = input.nextLine();
-  		System.out.println("Price: ");
-  		float price = input.nextFloat();
-  		componentList.add(component);
-  		componentList.add(price);
-  		System.out.println("Type 1 to continue adding\nType 0 for not adding");
-  		option = input.nextInt();
-  	}
-    return componentList;
-  }
-}*/
+	    }}}
