@@ -7,7 +7,7 @@ public class HashMapRestaurantMenu {
 	private String type;
 	private int number = 1;
 	HashMap<String,Double> RestaurantMenu 	  = new HashMap<String,Double>();
-	HashMap<String,Double> Selection	 	  = new HashMap<String,Double>();
+	HashMap<String,Double> SelectionMenu 	  = new HashMap<String,Double>();
 	HashMap<String,String> SaveRestaurantMenu = new HashMap<String,String>();
 	
 	public void CreateColdDrinkMenu(){
@@ -36,20 +36,18 @@ public class HashMapRestaurantMenu {
 			OrderPrice[item] = RestaurantMenu.get(items);item++;};
 		return OrderPrice;}
 	
-	public void RemoveRestaurantMenu(){
-		input = new Scanner(System.in);
-		System.out.println("You're now able to remove any unwanted item on "+type+" menu.\n"+
-				           "Enter the item number to Delete:");
-		System.out.println("---   " +type+" Menu\t   ---");
+	public void RemoveRestaurantMenu(HashMap<String,Double> selection){
+		for(String items : selection.keySet()){
+			RestaurantMenu.remove(items);};
+		System.out.println("Your Menu is now be like");
+		System.out.println("---   " +type+" Menu   ---");
 	    for (String items : RestaurantMenu.keySet()) {
 	    	System.out.println(number+") "+items+"	$"+RestaurantMenu.get(items));number++;};
 	    	number = 1 ;
-	    System.out.println("----------------------\n");
-		int OrderNumber = Integer.parseInt(input.nextLine())-1;
-		String[] OrderItem = RestaurantMenu.keySet().toArray(new String[RestaurantMenu.size()]);
-		RestaurantMenu.remove(OrderItem[OrderNumber]);}
+	    System.out.println("----------------------\n");}
 	
 	public void SelectRestaurantMenuHelper(){
+		SelectionMenu.keySet().clear();
 		String[] OrderItem  = new String [RestaurantMenu.size()];int item = 0;for(String items : RestaurantMenu.keySet()){OrderItem[item] = items;item++;};
 		Double[] OrderPrice = new Double[RestaurantMenu.size()];item = 0;for(String items : RestaurantMenu.keySet()){OrderPrice[item] = RestaurantMenu.get(items);item++;}
 		for(int looptimes = 0;looptimes<OrderItem.length;looptimes++){
@@ -57,17 +55,16 @@ public class HashMapRestaurantMenu {
 			String price = String.valueOf(OrderPrice[looptimes]);
 			SaveRestaurantMenu.put(items,price);}
 		}
-	public void SelectRestaurantMenu(){
+	public void SelectRestaurantMenu(String Function){
 		boolean InputCounter;
 		boolean[] InputCounterArray = new boolean [SaveRestaurantMenu.size()]; for(int items=0 ;items<SaveRestaurantMenu.size();items++){InputCounterArray[items] = true;};
 		while (true){
-		String [] OrderItem  	    = new String [SaveRestaurantMenu.size()]; int item = 0 ;for(String items : SaveRestaurantMenu.keySet()){OrderItem   [item] = items;item++;};
-		String [] OrderPrice 	    = new String [SaveRestaurantMenu.size()];	 item = 0 ;for(String items : SaveRestaurantMenu.keySet()){OrderPrice  [item] = SaveRestaurantMenu.get(items);item++;}
-		System.out.println(
-				   "Enter the number to select\n"+
-				   "reEnter the number to cancel the selection\n"+
-				   "Enter \"done\" to comfirm the selection\n"+
-				   "Enter \"all\" to select all items.");
+		String [] OrderItem  = new String [SaveRestaurantMenu.size()]; int item = 0 ;for(String items : SaveRestaurantMenu.keySet()){OrderItem   [item] = items;item++;};
+		String [] OrderPrice = new String [SaveRestaurantMenu.size()];	   item = 0 ;for(String items : SaveRestaurantMenu.keySet()){OrderPrice  [item] = SaveRestaurantMenu.get(items);item++;}
+		System.out.println(Function+"\n"+
+				   "Enter ...number > select or cancel\n"+
+				   "      ...\"all\"  > select all\n"+
+				   "      ...\"done\" when you finished");
 		String NumberDoneAll = input.nextLine(); 
 		SaveRestaurantMenu.clear();
 		switch (NumberDoneAll){
@@ -83,7 +80,7 @@ public class HashMapRestaurantMenu {
 				SaveRestaurantMenu.put(items,price);}
 			String items = OrderItem [Integer.valueOf(NumberDoneAll)-1];
 				String price = OrderPrice[Integer.valueOf(NumberDoneAll)-1]+"[Selected]";
-				Selection.put(OrderItem [Integer.valueOf(NumberDoneAll)-1],RestaurantMenu.get(items));
+				SelectionMenu.put(OrderItem [Integer.valueOf(NumberDoneAll)-1],RestaurantMenu.get(items));
 				SaveRestaurantMenu.remove(OrderItem [Integer.valueOf(NumberDoneAll)-1]);
 				SaveRestaurantMenu.put(items,price);
 			for(int looptimes = Integer.valueOf(NumberDoneAll);looptimes<OrderItem.length ;looptimes++){
@@ -103,11 +100,10 @@ public class HashMapRestaurantMenu {
 			if (NumberDoneAll.equals("all")){ 
 			for(int looptimes = 0;looptimes<OrderItem.length ;looptimes++){
 				String items = OrderItem[looptimes];
-				String price = OrderPrice[looptimes]+"[Selected]";
+				String price = Double.toString(RestaurantMenu.get(items))+"[Selected]";
 				SaveRestaurantMenu.put(items,price);}
 		    for (String items : RestaurantMenu.keySet()) {
-		    	Selection.put(items,RestaurantMenu.get(items));};
-		    InputCounter=!InputCounter;
+		    	SelectionMenu.put(items,RestaurantMenu.get(items));};
 		    for(int items=0 ;items<SaveRestaurantMenu.size();items++){InputCounterArray[items] = false;}}
 			 else{
 					for(int looptimes = 0;looptimes< Integer.valueOf(NumberDoneAll)-1;looptimes++){
@@ -116,7 +112,7 @@ public class HashMapRestaurantMenu {
 						SaveRestaurantMenu.put(items,price);}
 					String items = OrderItem [Integer.valueOf(NumberDoneAll)-1];
 						String price = Double.toString(RestaurantMenu.get(items));
-						Selection.remove(OrderItem [Integer.valueOf(NumberDoneAll)-1]);
+						SelectionMenu.remove(OrderItem [Integer.valueOf(NumberDoneAll)-1]);
 						SaveRestaurantMenu.remove(OrderItem [Integer.valueOf(NumberDoneAll)-1]);
 						SaveRestaurantMenu.put(items,price);
 					for(int looptimes = Integer.valueOf(NumberDoneAll);looptimes<OrderItem.length ;looptimes++){
@@ -130,18 +126,17 @@ public class HashMapRestaurantMenu {
 			    	number = 1 ;
 			    System.out.println("----------------------\n");
 			    for (int clearloop = 0; clearloop < OrderItem.length; clearloop++){
-			    OrderItem[clearloop]= null;
+			    OrderItem [clearloop]= null;
 			    OrderPrice[clearloop]=null;}}
 	    }	
 	}
-	public HashMap<String,Double> ReadSelection(){
-		 System.out.println("---   " +type+" Menu   ---");
-		    for (String items : Selection.keySet()) {
-		    	System.out.println(number+") "+items+"\t\t$"+Selection.get(items));number++;};
-		    	number = 1 ;
-		    System.out.println("----------------------\n");
-		return Selection;
-	}
+	public HashMap<String,Double> ReadSelectionMenu(){
+		return SelectionMenu;}
+	public void ShowSelectionMenu(){ System.out.println("---   " +type+" Menu   ---");
+    for (String items : SelectionMenu.keySet()) {
+    	System.out.println(number+") "+items+"\t\t$"+SelectionMenu.get(items));number++;};
+    	number = 1 ;
+    System.out.println("----------------------\n");}
 	
 	public void ShowRestaurantMenu(){
 	    System.out.println("---   " +type+" Menu   ---");
