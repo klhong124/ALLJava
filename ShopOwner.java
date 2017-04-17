@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-public class HashMapRestaurantMenu {
+public class ShopOwner {
 	private Scanner input;
 	private String type;
 	private int number = 1;
@@ -16,7 +16,8 @@ public class HashMapRestaurantMenu {
 	HashMap<String,Double> SubRestaurantMenu  = new HashMap<String,Double>();
 	HashMap<String,Double> SelectionMenu 	  = new HashMap<String,Double>();
 	HashMap<String,String> SaveRestaurantMenu = new HashMap<String,String>();
-	public void Shop(){
+	
+	public void ShopInfoation(){
 		System.out.println("Enter your Shop's phone number");
 		ShopNumber=input.nextLine();
 		System.out.println("Enter your Shop Address");
