@@ -5,12 +5,19 @@ import java.io.IOException;
 
 public class ShopOwnerMainFlow extends PreOrder{
 	
-	public void mainflow() throws IOException{
+	public void mainflow() throws IOException, ClassNotFoundException{
 	    System.out.println("Select by entering the number,\n"
 	    		+ "[1]Login\t[2]Sign up\t[3]Exit");
 	    int LoginSignUp=Integer.parseInt(input.nextLine());
 	    switch(LoginSignUp){
-	    case  1 :Login("welcome back, "+ShopID);
+	    case  1 :
+	    	while(true){
+			System.out.print("Enter a ShopID.");
+		  	  ShopID=input.nextLine();
+		  	  File folder=new File(OneDrivePath+"\\"+ShopID);
+				  if(!folder.exists()&&!folder.isDirectory()){System.out.println("Try again, ShopID doesn't exist");}
+				  else{break;}}
+	    	Login("welcome back, "+ShopID);
 	    	break;
 	    case  2 :SignUp();
 	    	break;  
@@ -18,14 +25,11 @@ public class ShopOwnerMainFlow extends PreOrder{
 	    	break;
 	    }
 	}
-	public void Login(String welcome) throws IOException{
-	  	  while(true){
-		System.out.print("Enter a ShopID.");
-  	  ShopID=input.nextLine();
-  	  File folder=new File(OneDrivePath+"\\"+ShopID);
-		  if(!folder.exists()&&!folder.isDirectory()){System.out.println("Try again, ShopID doesn't exist");}
-		  else{break;}}
+	public void Login(String welcome) throws IOException, ClassNotFoundException{
 		foodMenu.InputTextFile(OneDrivePath,ShopID,"RestaurantMenu","FoodMenu");
+		drinkMenu.InputTextFile(OneDrivePath,ShopID,"RestaurantMenu","DrinkMenu");
+		setMenu.InputTextFile(OneDrivePath, ShopID, "SubRestaurantMenu","FoodSetMenu");
+		setMenu.InputTextFile(OneDrivePath, ShopID, "RestaurantMenu","DrinkSetMenu");
 		boolean quit = false;
 		 System.out.println(welcome);
 		 while (quit != true){
@@ -36,9 +40,9 @@ public class ShopOwnerMainFlow extends PreOrder{
 			 				+ "Enter a number:");
 		 int option=Integer.parseInt(input.nextLine());
 		 switch (option){
-		 case 1 :LoginSwitch(foodMenu,"FoodMenu");
+		 case 1 :LoginSwitch(foodMenu,"Food");
 			 break;
-		 case 2 :LoginSwitch(drinkMenu,"DrinkMenu");
+		 case 2 :LoginSwitch(drinkMenu,"Drink");
 			 break;
 		 case 3 :LoginSwitchSet();
 			 break;
@@ -87,7 +91,7 @@ public class ShopOwnerMainFlow extends PreOrder{
 		 int option=Integer.parseInt(input.nextLine());
 		 switch (option){
 		 case 1 :((ShopOwner) Menu).AddRestaurantMenu(type);
-		 		 ((ShopOwner) Menu).OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", type);
+		 		 ((ShopOwner) Menu).OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", type+"Menu.txt");
 			 break;
 		 case 2 :((ShopOwner) Menu).RemoveRestaurantMenu();
 		 		 ((ShopOwner) Menu).OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", type);
@@ -99,7 +103,7 @@ public class ShopOwnerMainFlow extends PreOrder{
 			 }
 		 }
 	}
-	public void SignUp() throws IOException{
+	public void SignUp() throws IOException, ClassNotFoundException{
   	  while(true){
 		  System.out.print("Enter a ShopID.");
     	  ShopID=input.nextLine();

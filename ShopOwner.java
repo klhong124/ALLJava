@@ -1,22 +1,18 @@
 package ALLJava;
 import java.util.HashMap;
-import java.io.BufferedReader;
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 public class ShopOwner {
 	private Scanner input;
-	private static String storeInput = new String();
-	private static int counter = 0;
 	private String type;
 	private static int number = 1;
-	private static int endPlace = 0;
 	private String[] ShopInfo = new String [4];
-	static HashMap<String,Double> RestaurantMenu 	  = new HashMap<String,Double>();
+	HashMap<String,Double> RestaurantMenu 	  = new HashMap<String,Double>();
 	HashMap<String,Double> SubRestaurantMenu  = new HashMap<String,Double>();
 	HashMap<String,Double> SelectionMenu 	  = new HashMap<String,Double>();
 	HashMap<String,String> SaveRestaurantMenu = new HashMap<String,String>();
@@ -57,18 +53,6 @@ public class ShopOwner {
 		return SubRestaurantMenu;}
 	public HashMap<String,Double> ReadSelectionMenu(){
 		return SelectionMenu;}
-	public String[] ReadOrderItem(){
-		String[] OrderItem  = new String [RestaurantMenu.size()];
-		int item = 0;
-		for(String items : RestaurantMenu.keySet()){
-			OrderItem[item] = items;item++;};
-		return OrderItem;}
-	public Double[] ReadOrderPrice(){
-		Double[] OrderPrice = new Double[RestaurantMenu.size()];
-		int item = 0;
-		for(String items : RestaurantMenu.keySet()){
-			OrderPrice[item] = RestaurantMenu.get(items);item++;};
-		return OrderPrice;}
 	public String[] ReadShopInfo(){
 		return ShopInfo;}
 
@@ -261,66 +245,44 @@ public class ShopOwner {
 	public void OutputTextFile(String oneDrivePath,String shopID,String text,String Menu) throws IOException {
 		switch (text){
 		case "RestaurantMenu":
-			FileOutputStream file = new FileOutputStream(new File(oneDrivePath+"\\"+shopID+"\\"+Menu+".txt"));
-			PrintStream print = new PrintStream(file);
-			print.println(ReadRestaurantMenu());
-			print.close();break;
+			ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream(oneDrivePath+"\\"+shopID+"\\"+Menu+".txt"));
+			file.writeObject(ReadRestaurantMenu());
+			file.close();break;
 		case "SubRestaurantMenu":
-			file = new FileOutputStream(new File(oneDrivePath+"\\"+shopID+"\\"+Menu+".txt"));
-			print = new PrintStream(file);
-			print.println(ReadSubRestaurantMenu());
-			print.close();break;
+			file = new ObjectOutputStream(new FileOutputStream(oneDrivePath+"\\"+shopID+"\\"+Menu+".txt"));
+			file.writeObject(ReadSubRestaurantMenu());
+			file.close();break;
 		case "ShopInfo":
-			file = new FileOutputStream(new File(oneDrivePath+"\\"+shopID+"\\ShopInfo.txt"));
-			print = new PrintStream(file);
-			print.println(ReadShopInfo());
-			print.close();break;
+			file = new ObjectOutputStream(new FileOutputStream(oneDrivePath+"\\"+shopID+"\\ShopInfo.txt"));
+			file.writeObject(ReadShopInfo());
+			file.close();break;
 			}
 	}
-	public void InputTextFile(String oneDrivePath,String shopID,String text,String Menu)throws IOException{
-		FileReader fr = new FileReader(oneDrivePath+"\\"+shopID+"\\"+Menu+".txt");
-		BufferedReader br = new BufferedReader(fr);
-		while (br.ready()) {
-			storeInput = br.readLine();
-			System.out.println(storeInput);
-			readEach();
-		}
-		fr.close();	
-	}
-	private static void readEach() {
-		while((storeInput.charAt(0)) == '{') {
-			counter++;
-			checkNext(counter);
-		}
-		checkEnd(endPlace);
-	}
-	private static void checkNext(int counterPlusOne) {
-		String name = new String("");
-		String price = new String("");
-		while (Character.isLetter(storeInput.charAt(counterPlusOne))) {
-			name+=storeInput.charAt(counterPlusOne);
-			while (Character.isWhitespace(storeInput.charAt(counterPlusOne))) {
-				counterPlusOne++;
+	public void InputTextFile(String oneDrivePath,String shopID,String text,String Menu)throws IOException, ClassNotFoundException{
+		switch (text){
+		case "RestaurantMenu":
+			ObjectInputStream file = new ObjectInputStream(new FileInputStream(oneDrivePath+"\\"+shopID+"\\"+Menu+".txt"));
+			RestaurantMenu = (HashMap<String,Double>) file.readObject();
+			SaveRestaurantMenu.keySet().clear();
+			for (String items : RestaurantMenu.keySet()) {
+				String item = items;
+				String price = String.valueOf(ReadSelectionMenu().get(items));
+				SaveRestaurantMenu.put(item,price);}
+			file.close();break;
+		case "SubRestaurantMenu":
+			file = new ObjectInputStream(new FileInputStream(oneDrivePath+"\\"+shopID+"\\"+Menu+".txt"));
+			SubRestaurantMenu = (HashMap<String,Double>) file.readObject();
+			SaveRestaurantMenu.keySet().clear();
+			for (String items : SubRestaurantMenu.keySet()) {
+				String item = items;
+				String price = String.valueOf(ReadSelectionMenu().get(items));
+				SaveRestaurantMenu.put(item,price);}
+			file.close();break;
+		case "ShopInfo":
+			file = new ObjectInputStream(new FileInputStream(oneDrivePath+"\\"+shopID+"\\ShopInfo.txt"));
+			ShopInfo = (String[]) file.readObject();
+			file.close();break;
 			}
-			while ((storeInput.charAt(counterPlusOne)) == '=') {
-				counterPlusOne++;
-			}
-			while (Character.isDigit(storeInput.charAt(counterPlusOne))) {
-				price+=storeInput.charAt(counterPlusOne);
-				while ((storeInput.charAt(counterPlusOne)) == '.') {
-					price+=storeInput.charAt(counterPlusOne);
-					counterPlusOne++;
-				}
-			}
-			RestaurantMenu.put(name,Double.parseDouble(price));
-			System.out.println(RestaurantMenu);
-			counterPlusOne++;
-		}
-		endPlace = counterPlusOne;
 	}
-	private static void checkEnd(int end) {
-		if ((storeInput.charAt(endPlace)) == '}') {
-			System.out.println("The end");
-		}
 	}
-}
+

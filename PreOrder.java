@@ -11,7 +11,7 @@ public class PreOrder {
 	public static Scanner input;
 	public static String ShopID;
 	public static String OneDrivePath;
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException, ClassNotFoundException {
 	    input = new Scanner(System.in);
 	    System.out.println("Welcome to HereRice.\n"
 	    		+ "Enter OneDrivePath To get Started");
