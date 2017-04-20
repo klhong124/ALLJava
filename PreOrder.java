@@ -6,6 +6,7 @@ public class PreOrder {
 	static ShopOwner foodMenu  = new ShopOwner();
 	static ShopOwner drinkMenu = new ShopOwner();
 	static ShopOwner setMenu   = new ShopOwner();
+	static ShopOwner shopInfo  = new ShopOwner();
 	static ShopOwnerMainFlow shopOwnerMainFlow = new ShopOwnerMainFlow();
 	public static Scanner input;
 	public static String ShopID;
@@ -15,6 +16,7 @@ public class PreOrder {
 	    System.out.println("Welcome to HereRice.\n"
 	    		+ "Enter OneDrivePath To get Started");
 	    OneDrivePath=input.nextLine();
+	    while (true){
 	    System.out.println("[1]Customer\t[2]ShopOwner");
 	    String customerORshopowner=input.nextLine();
 	    switch (customerORshopowner){
@@ -24,5 +26,6 @@ public class PreOrder {
 	    	shopOwnerMainFlow.mainflow();
 	    	break;
 	    }
+	 }
   }
 }

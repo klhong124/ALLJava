@@ -1,30 +1,42 @@
 package ALLJava;
 import java.util.HashMap;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 
 public class ShopOwner {
 	private Scanner input;
+	private static String storeInput = new String();
+	private static int counter = 0;
 	private String type;
-	private int number = 1;
-	private String ShopAddress;
-	private String ShopNumber;
-	HashMap<String,Double> RestaurantMenu 	  = new HashMap<String,Double>();
+	private static int number = 1;
+	private static int endPlace = 0;
+	private String[] ShopInfo = new String [4];
+	static HashMap<String,Double> RestaurantMenu 	  = new HashMap<String,Double>();
 	HashMap<String,Double> SubRestaurantMenu  = new HashMap<String,Double>();
 	HashMap<String,Double> SelectionMenu 	  = new HashMap<String,Double>();
 	HashMap<String,String> SaveRestaurantMenu = new HashMap<String,String>();
 	
-	public void ShopInfoation(){
-		System.out.println("Enter your Shop's phone number");
-		ShopNumber=input.nextLine();
-		System.out.println("Enter your Shop Address");
-		ShopAddress=input.nextLine();
+	public void ShopInformation(){
+		input = new Scanner(System.in);
+		System.out.println("Enter the following information of your reataurant\n"
+				+ "Restaurant Name:");
+		ShopInfo[0]="Restaurant Name:"+input.nextLine();
+		System.out.println("Shop Address:");
+		ShopInfo[1]=ShopInfo+"Shop Address:"+input.nextLine();
+		System.out.println("About us:");
+		ShopInfo[2]=ShopInfo+"About us:"+input.nextLine();
+		System.out.println("Contact us:");
+		ShopInfo[3]=ShopInfo+"Contact us:"+input.nextLine();
 	}
 	
 	public void CreateColdDrinkMenu(){
+		SelectRestaurantMenuHelper("Select the drink to copy as a cold drink with extra-payment");
+		SelectRestaurantMenu();
 		SaveRestaurantMenu.keySet().clear();
 		System.out.print("Enter the extra-payment for Cold Drink.");
 		double extrapayment = Double.parseDouble(input.nextLine());
@@ -57,20 +69,39 @@ public class ShopOwner {
 		for(String items : RestaurantMenu.keySet()){
 			OrderPrice[item] = RestaurantMenu.get(items);item++;};
 		return OrderPrice;}
-	public String ReadShopAddress(){
-		return ShopAddress;}
-	public String ReadShopNumber(){
-		return ShopNumber;}
-	
+	public String[] ReadShopInfo(){
+		return ShopInfo;}
+
+	public void RemoveRestaurantSetMenu(){
+	SelectRestaurantSetMenuHelper("select TO REMOVE Set");
+	SelectRestaurantMenu();
+	for(String items : ReadSelectionMenu().keySet()){
+		SubRestaurantMenu.remove(items);};
+	System.out.println("Your Menu is now be like");
+	ShowSubRestaurantMenu("---   Set Menu   ---");
+	}
 	public void RemoveRestaurantMenu(){
-		SelectRestaurantMenuHelper();
-		SelectRestaurantMenu("select TO REMOVE ITEM");
+		SelectRestaurantMenuHelper("select TO REMOVE item(s)");
+		SelectRestaurantMenu();
 		for(String items : ReadSelectionMenu().keySet()){
 			RestaurantMenu.remove(items);};
 		System.out.println("Your Menu is now be like");
 		ShowRestaurantMenu("---   " +type+" Menu   ---");}
-	
-	public void SelectRestaurantMenuHelper(){
+	public void SelectRestaurantSetMenuHelper(String Function){
+		SelectionMenu.keySet().clear();
+		String[] OrderItem  = new String [SubRestaurantMenu.size()];int item = 0;for(String items : SubRestaurantMenu.keySet()){OrderItem[item] = items;item++;};
+		Double[] OrderPrice = new Double[SubRestaurantMenu.size()];item = 0;for(String items : SubRestaurantMenu.keySet()){OrderPrice[item] = SubRestaurantMenu.get(items);item++;}
+		for(int looptimes = 0;looptimes<OrderItem.length;looptimes++){
+			String items = OrderItem[looptimes];
+			String price = String.valueOf(OrderPrice[looptimes]);
+			SaveRestaurantMenu.put(items,price);}
+		System.out.println("[Select Mode]"+Function+"\n"
+				  + "Enter number > select or cancel\n"
+				  + "Enter \"all\"  > select all\n"
+				  + "Enter \"done\" > exit select mode");
+		ShowSubRestaurantMenu("---   Set Menu   ---");
+		}
+	public void SelectRestaurantMenuHelper(String Function){
 		SelectionMenu.keySet().clear();
 		String[] OrderItem  = new String [RestaurantMenu.size()];int item = 0;for(String items : RestaurantMenu.keySet()){OrderItem[item] = items;item++;};
 		Double[] OrderPrice = new Double[RestaurantMenu.size()];item = 0;for(String items : RestaurantMenu.keySet()){OrderPrice[item] = RestaurantMenu.get(items);item++;}
@@ -78,18 +109,19 @@ public class ShopOwner {
 			String items = OrderItem[looptimes];
 			String price = String.valueOf(OrderPrice[looptimes]);
 			SaveRestaurantMenu.put(items,price);}
+		System.out.println("[Select Mode]"+Function+"\n"
+				  + "Enter number > select or cancel\n"
+				  + "Enter \"all\"  > select all\n"
+				  + "Enter \"done\" > exit select mode");
 		ShowRestaurantMenu("---   " +type+" Menu   ---");
 		}
-	public void SelectRestaurantMenu(String Function){
+	public void SelectRestaurantMenu(){
 		boolean InputCounter;
 		boolean[] InputCounterArray = new boolean [SaveRestaurantMenu.size()]; for(int items=0 ;items<SaveRestaurantMenu.size();items++){InputCounterArray[items] = true;};
 		while (true){
 		String [] OrderItem  = new String [SaveRestaurantMenu.size()]; int item = 0 ;for(String items : SaveRestaurantMenu.keySet()){OrderItem   [item] = items;item++;};
 		String [] OrderPrice = new String [SaveRestaurantMenu.size()];	   item = 0 ;for(String items : SaveRestaurantMenu.keySet()){OrderPrice  [item] = SaveRestaurantMenu.get(items);item++;}
-		System.out.println(Function+"\n"+
-				   "Enter ...number > select or cancel\n"+
-				   "      ...\"all\"  > select all\n"+
-				   "      ...\"done\" when you finished");
+		System.out.print("Command:");
 		String NumberDoneAll = input.nextLine(); 
 		SaveRestaurantMenu.clear();
 		switch (NumberDoneAll){
@@ -150,21 +182,21 @@ public class ShopOwner {
 	
 	public void ShowSelectionMenu(){
 		System.out.println("---   " +type+" Menu   ---");
-    for (String items : SelectionMenu.keySet()) {
-    	System.out.println(number+") "+items+"\t$"+SelectionMenu.get(items));number++;};
+    for (String items : ReadSelectionMenu().keySet()) {
+    	System.out.println(number+") "+items+"\t\t$"+SelectionMenu.get(items));number++;};
     	number = 1 ;
     System.out.println("----------------------\n");}
 	public void ShowRestaurantMenu(String title){
 	    System.out.println(title);
 	    for (String items : RestaurantMenu.keySet()) {
-	    	System.out.println(number+") "+items+"\t$"+RestaurantMenu.get(items));number++;};
+	    	System.out.println(number+") "+items+"\t\t$"+RestaurantMenu.get(items));number++;};
 	    	number = 1 ;
 	    System.out.println("----------------------\n");
 	    }
 	public void ShowSubRestaurantMenu(String title){
 	    System.out.println(title);
 	    for (String items : SubRestaurantMenu.keySet()) {
-	    	System.out.println(number+") "+items+"\t$"+SubRestaurantMenu.get(items));number++;};
+	    	System.out.println(number+") "+items+"\t\t$"+SubRestaurantMenu.get(items));number++;};
 	    	number = 1 ;
 	    System.out.println("----------------------\n");
 	    }
@@ -178,30 +210,34 @@ public class ShopOwner {
 	public void AddRestaurantMenu(String typename) {
 		type=typename;
 		input = new Scanner(System.in);
-		System.out.println
-		("You're now editing the list of "+type+" menu.\n"+
-		 "Enter the NUMBER of Menu items:");
+		System.out.print
+		("[Edit mode]"+type+" menu.\n"+
+		 "How many item(s) you would like to add?\n"
+		 + "Enter a number:");
 		int NumberOfItemToAdd = Integer.parseInt(input.nextLine());
-		for(int looptimes = 1; looptimes<NumberOfItemToAdd;looptimes++){
-		System.out.println("Enter "+type+" name to put on the menu:");
-		String item = input.nextLine()+"\t";
-		System.out.println("How much does it cost?");
+		for(int looptimes = 0; looptimes<NumberOfItemToAdd-1;looptimes++){
+		System.out.print("Step one: Name of "+type+"\n"
+				+ "Step two: Price of it\n"
+				+"["+Integer.toString(NumberOfItemToAdd-looptimes)+" left]Enter Name:");
+		String item = input.nextLine();
+		System.out.print("\tEnter Cost:");
 		double price = Double.parseDouble(input.nextLine());
 	    RestaurantMenu.put(item,price);	
 	    ShowRestaurantMenu("-----   Preview\t -----");}
-		System.out.println("Enter "+type+" name to put on the menu:");
-		String item = input.nextLine()+"\t";
-		System.out.println("How much does it cost?");
+		System.out.print("Step one: Name of "+type+"\n"
+				+ "Step two: Price of it\n"
+				+"[1 left]Enter Name:");
+		String item = input.nextLine();
+		System.out.print("\tEnter Cost:");
 		double price = Double.parseDouble(input.nextLine());
 	    RestaurantMenu.put(item,price);	
 	    System.out.println("Your "+type+" menu is saved as:");
 	    ShowRestaurantMenu("---   " +type+" Menu   ---");}
 	public void CreateSetMenu(HashMap<String,Double> foodMenu,HashMap<String,Double> drinkMenu){
-		type="Drink";
 		input = new Scanner(System.in);
 		SaveRestaurantMenu.keySet().clear();
 		for(String items : foodMenu.keySet()){
-			System.out.println("Enter the Price of set for "+items);
+			System.out.println("Enter the Price of "+items+"(Set)");
 			String item  = items+"(Set)";
 			double price = Double.parseDouble(input.nextLine());
 			SubRestaurantMenu.put(item,price);
@@ -210,18 +246,17 @@ public class ShopOwner {
 			String item  = items;
 			double price = 0;
 			RestaurantMenu.put(item,price);}
-			SelectRestaurantMenuHelper();
-			SelectRestaurantMenu("Select some drink for extrapayment");
-			System.out.print("Enter the extrapayment:");
+			SelectRestaurantMenuHelper("Select some drink for extra-payment");
+			SelectRestaurantMenu();
+			System.out.print("Enter the extra-payment:");
 			double extrapayment = Double.parseDouble(input.nextLine());
 			for(String items : ReadSelectionMenu().keySet()){
 				RestaurantMenu.put(items,extrapayment);};
-			System.out.println("Your SetMenu of is now be like");
-			ShowSubRestaurantMenu("---   " +type+" Menu   ---");
-			ShowRestaurantMenu("---   " +type+" Menu   ---");
+			System.out.println("Your SetMenu is now being like");
+			ShowSubRestaurantMenu("---   Set Menu   ---");
+			ShowRestaurantMenu("---   Drink Menu   ---");
 			
 		}
-	
 	
 	public void OutputTextFile(String oneDrivePath,String shopID,String text,String Menu) throws IOException {
 		switch (text){
@@ -235,18 +270,57 @@ public class ShopOwner {
 			print = new PrintStream(file);
 			print.println(ReadSubRestaurantMenu());
 			print.close();break;
-		case "ShopAddress":
-			file = new FileOutputStream(new File(oneDrivePath+"\\"+shopID+"\\ShopAddress.txt"));
+		case "ShopInfo":
+			file = new FileOutputStream(new File(oneDrivePath+"\\"+shopID+"\\ShopInfo.txt"));
 			print = new PrintStream(file);
-			print.println(ReadShopAddress());
-			print.close();break;
-		case "ShopNumber":
-			file = new FileOutputStream(new File(oneDrivePath+"\\"+shopID+"\\ShopNumber.txt"));
-			print = new PrintStream(file);
-			print.println(ReadShopNumber());
+			print.println(ReadShopInfo());
 			print.close();break;
 			}
 	}
-
-
+	public void InputTextFile(String oneDrivePath,String shopID,String text,String Menu)throws IOException{
+		FileReader fr = new FileReader(oneDrivePath+"\\"+shopID+"\\"+Menu+".txt");
+		BufferedReader br = new BufferedReader(fr);
+		while (br.ready()) {
+			storeInput = br.readLine();
+			System.out.println(storeInput);
+			readEach();
+		}
+		fr.close();	
+	}
+	private static void readEach() {
+		while((storeInput.charAt(0)) == '{') {
+			counter++;
+			checkNext(counter);
+		}
+		checkEnd(endPlace);
+	}
+	private static void checkNext(int counterPlusOne) {
+		String name = new String("");
+		String price = new String("");
+		while (Character.isLetter(storeInput.charAt(counterPlusOne))) {
+			name+=storeInput.charAt(counterPlusOne);
+			while (Character.isWhitespace(storeInput.charAt(counterPlusOne))) {
+				counterPlusOne++;
+			}
+			while ((storeInput.charAt(counterPlusOne)) == '=') {
+				counterPlusOne++;
+			}
+			while (Character.isDigit(storeInput.charAt(counterPlusOne))) {
+				price+=storeInput.charAt(counterPlusOne);
+				while ((storeInput.charAt(counterPlusOne)) == '.') {
+					price+=storeInput.charAt(counterPlusOne);
+					counterPlusOne++;
+				}
+			}
+			RestaurantMenu.put(name,Double.parseDouble(price));
+			System.out.println(RestaurantMenu);
+			counterPlusOne++;
+		}
+		endPlace = counterPlusOne;
+	}
+	private static void checkEnd(int end) {
+		if ((storeInput.charAt(endPlace)) == '}') {
+			System.out.println("The end");
+		}
+	}
 }
