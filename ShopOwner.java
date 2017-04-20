@@ -17,7 +17,7 @@ public class ShopOwner {
 	HashMap<String,Double> SelectionMenu 	  = new HashMap<String,Double>();
 	HashMap<String,String> SaveRestaurantMenu = new HashMap<String,String>();
 	
-	public void ShopInformation(){
+	public void EditShopInformation(){
 		input = new Scanner(System.in);
 		System.out.println("Enter the following information of your reataurant\n"
 				+ "Restaurant Name:");
@@ -191,7 +191,13 @@ public class ShopOwner {
     	System.out.println(number+") "+items+"\t\t$"+SaveRestaurantMenu.get(items));number++;};
     	number = 1 ;
     System.out.println("----------------------\n");}
-	    
+	public void ShowShopInfo(){
+		System.out.println(ShopInfo[0]);
+		System.out.println(ShopInfo[1]);
+		System.out.println(ShopInfo[2]);
+		System.out.println(ShopInfo[3]);
+	}
+	
 	public void AddRestaurantMenu(String typename) {
 		type=typename;
 		input = new Scanner(System.in);
@@ -243,7 +249,7 @@ public class ShopOwner {
 			
 		}
 	
-	public void OutputTextFile(String oneDrivePath,String shopID,String text,String Menu) throws IOException {
+	public void OutputTextFile(String oneDrivePath,String shopID,String text,String  Menu) throws IOException {
 		switch (text){
 		case "RestaurantMenu":
 			ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream(oneDrivePath+"\\"+shopID+"\\"+Menu));

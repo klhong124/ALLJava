@@ -30,13 +30,15 @@ public class ShopOwnerMainFlow extends PreOrder{
 		drinkMenu.InputTextFile(OneDrivePath,ShopID,"RestaurantMenu","DrinkMenu");
 		setMenu.InputTextFile(OneDrivePath, ShopID, "SubRestaurantMenu","FoodSetMenu");
 		setMenu.InputTextFile(OneDrivePath, ShopID, "RestaurantMenu","DrinkSetMenu");
+		shopInfo.InputTextFile(OneDrivePath, ShopID, "ShopInfo"," ");
 		boolean quit = false;
 		 System.out.println(welcome);
 		 while (quit != true){
 			 System.out.print("[1]Edit Food Menu\n"
 			 				+ "[2]Edit Drink Menu\n"
 			 				+ "[3]Edit Set Menu\n"
-			 				+ "[4]Exit\n"
+			 				+ "[4]Edit Shop Information\n"
+			 				+ "[5]Exit\n"
 			 				+ "Enter a number:");
 		 int option=Integer.parseInt(input.nextLine());
 		 switch (option){
@@ -46,7 +48,11 @@ public class ShopOwnerMainFlow extends PreOrder{
 			 break;
 		 case 3 :LoginSwitchSet();
 			 break;
-		 case 4 :quit = true;
+		 case 4:shopInfo.ShowShopInfo();
+		 		shopInfo.EditShopInformation();
+		 		 shopInfo.OutputTextFile(OneDrivePath, ShopID, "ShopInfo", null);
+			 break;
+		 case 5 :quit = true;
 			 break;
 		  }
 		 }
@@ -115,7 +121,7 @@ public class ShopOwnerMainFlow extends PreOrder{
 	  		+ "HereRice can makes you and your restaurant become famous.\n"
 	  		+ "Customers are able to order your food and pay on HereRice.\n"
 	  		+ "To start with, Please enter some information of your shop below.");
-	  shopInfo.ShopInformation();
+	  shopInfo.EditShopInformation();
 	  shopInfo.OutputTextFile(OneDrivePath, ShopID, "ShopInfo", null);
 	  System.out.println("Great! Your Shop Information have been updated.\n"
 			+ "It is time to create a food Menu now.\n"
