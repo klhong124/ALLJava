@@ -100,13 +100,14 @@ public class ShopOwner {
 		ShowRestaurantMenu("---   " +type+" Menu   ---");
 		}
 	public void SelectRestaurantMenu(){
+		input = new Scanner(System.in);
 		boolean InputCounter;
 		boolean[] InputCounterArray = new boolean [SaveRestaurantMenu.size()]; for(int items=0 ;items<SaveRestaurantMenu.size();items++){InputCounterArray[items] = true;};
 		while (true){
 		String [] OrderItem  = new String [SaveRestaurantMenu.size()]; int item = 0 ;for(String items : SaveRestaurantMenu.keySet()){OrderItem   [item] = items;item++;};
 		String [] OrderPrice = new String [SaveRestaurantMenu.size()];	   item = 0 ;for(String items : SaveRestaurantMenu.keySet()){OrderPrice  [item] = SaveRestaurantMenu.get(items);item++;}
 		System.out.print("Command:");
-		String NumberDoneAll = input.nextLine(); 
+			String NumberDoneAll = input.nextLine(); 
 		SaveRestaurantMenu.clear();
 		switch (NumberDoneAll){
 		case "done":InputCounter=true;break;
@@ -245,7 +246,7 @@ public class ShopOwner {
 	public void OutputTextFile(String oneDrivePath,String shopID,String text,String Menu) throws IOException {
 		switch (text){
 		case "RestaurantMenu":
-			ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream(oneDrivePath+"\\"+shopID+"\\"+Menu+".txt"));
+			ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream(oneDrivePath+"\\"+shopID+"\\"+Menu));
 			file.writeObject(ReadRestaurantMenu());
 			file.close();break;
 		case "SubRestaurantMenu":
