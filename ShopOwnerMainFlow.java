@@ -39,7 +39,7 @@ public class ShopOwnerMainFlow extends PreOrder{
 			 				+ "[2]Edit Drink Menu\n"
 			 				+ "[3]Edit Set Menu\n"
 			 				+ "[4]Edit Shop Information\n"
-			 				+ "[5]Exit\n"
+			 				+ "[5]LogOut\n"
 			 				+ "Enter a number:");
 		 int option=Integer.parseInt(input.nextLine());
 		 switch (option){
@@ -50,7 +50,7 @@ public class ShopOwnerMainFlow extends PreOrder{
 		 case 3 :LoginSwitchSet();
 			 break;
 		 case 4:shopInfo.ShowShopInformation();
-		 		shopInfo.EditShopInformation();
+		 		shopInfo.EditStringStringHashMap("info","OneDrivePath","","");
 		 		System.out.println("Updated :");
 		 		shopInfo.ShowShopInformation();
 		 		shopInfo.OutputTextFile(OneDrivePath, ShopID, "ShopInfo", null);
@@ -142,18 +142,15 @@ public class ShopOwnerMainFlow extends PreOrder{
 	}
 	
 	public void SignUp() throws IOException, ClassNotFoundException{
-  	  while(true){
-		  System.out.print("Enter a ShopID.");
-    	  ShopID=input.nextLine();
-    	  File folder=new File(OneDrivePath+"\\"+ShopID);
-		  if(!folder.exists()&&!folder.isDirectory()){new File(OneDrivePath+"\\"+ShopID).mkdir();break;}
-		  else{System.out.print("This ShopID is already used.\n"
-		  		+ "please try again,");}}
+      selectShop.InputTextFile(OneDrivePath,"", "SelectShop", "");
+	  ShopID=selectShop.EditStringStringHashMap("select",OneDrivePath,"","");
 	  System.out.println("Welcome,"+ShopID+".\n"
 	  		+ "HereRice can makes you and your restaurant become famous.\n"
 	  		+ "Customers are able to order your food and pay on HereRice.\n"
 	  		+ "To start with, Please enter some information of your shop below.");
-	  shopInfo.EditShopInformation();
+	  ShopName=shopInfo.EditStringStringHashMap("info","OneDrivePath","","");
+	  selectShop.EditStringStringHashMap("",OneDrivePath,ShopID,ShopName);
+	  selectShop.OutputTextFile("",OneDrivePath,"","");
 	  shopInfo.OutputTextFile(OneDrivePath, ShopID, "ShopInfo", null);
 	  System.out.println("Great! Your Shop Information have been updated.\n"
 			+ "It is time to create a food Menu now.\n"

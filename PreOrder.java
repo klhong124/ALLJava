@@ -3,13 +3,16 @@ import java.util.Scanner;
 import java.io.IOException;
 
 public class PreOrder {
-	static ShopOwner foodMenu  = new ShopOwner();
-	static ShopOwner drinkMenu = new ShopOwner();
-	static ShopOwner setMenu   = new ShopOwner();
-	static ShopOwner shopInfo  = new ShopOwner();
+	static RestaurantMenu foodMenu 	 = new RestaurantMenu();
+	static RestaurantMenu drinkMenu  = new RestaurantMenu();
+	static RestaurantMenu setMenu 	 = new RestaurantMenu();
+	static RestaurantMenu shopInfo	 = new RestaurantMenu();
+	static RestaurantMenu selectShop = new RestaurantMenu();
 	static ShopOwnerMainFlow shopOwnerMainFlow = new ShopOwnerMainFlow();
+	static CustomerMainFlow customerMainFlow = new CustomerMainFlow();
 	public static Scanner input;
 	public static String ShopID;
+	public static String ShopName;
 	public static String OneDrivePath;
   public static void main(String[] args) throws IOException, ClassNotFoundException {
 	    input = new Scanner(System.in);
@@ -21,9 +24,13 @@ public class PreOrder {
 	    String customerORshopowner=input.nextLine();
 	    switch (customerORshopowner){
 	    case "1":
+	    	customerMainFlow.mainflow();
 	    	break;
 	    case "2":
 	    	shopOwnerMainFlow.mainflow();
+	    	break;
+	    default :
+	    	System.out.println("Try Again...");
 	    	break;
 	    }
 	 }
