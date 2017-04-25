@@ -6,6 +6,12 @@ import java.io.IOException;
 public class ShopOwnerMainFlow extends PreOrder{
 	
 	public void mainflow() throws IOException, ClassNotFoundException{
+		foodMenu.CLEAR();
+		drinkMenu.CLEAR();
+		setfoodMenu.CLEAR();
+		setdrinkMenu.CLEAR();
+		shopInfo.CLEAR();
+		selectShop.CLEAR();
 	    System.out.println("Select by entering the number,\n"
 	    		+ "[1]Login\t[2]Sign up\t[3]Exit");
 	    int LoginSignUp=Integer.parseInt(input.nextLine());
@@ -29,8 +35,8 @@ public class ShopOwnerMainFlow extends PreOrder{
 	public void Login(String welcome) throws IOException, ClassNotFoundException{
 		foodMenu.InputTextFile(OneDrivePath,ShopID,"RestaurantMenu","FoodMenu");
 		drinkMenu.InputTextFile(OneDrivePath,ShopID,"RestaurantMenu","DrinkMenu");
-		setMenu.InputTextFile(OneDrivePath, ShopID, "SubRestaurantMenu","FoodSetMenu");
-		setMenu.InputTextFile(OneDrivePath, ShopID, "RestaurantMenu","DrinkSetMenu");
+		setfoodMenu.InputTextFile(OneDrivePath, ShopID, "RestaurantMenu","FoodSetMenu");
+		setdrinkMenu.InputTextFile(OneDrivePath, ShopID, "RestaurantMenu","DrinkSetMenu");
 		shopInfo.InputTextFile(OneDrivePath, ShopID, "ShopInfo"," ");
 		boolean quit = false;
 		 System.out.println(welcome);
@@ -74,15 +80,18 @@ public class ShopOwnerMainFlow extends PreOrder{
 		 case 1 :
 			 	 foodMenu.SelectRestaurantMenuHelper("Select the food to create a set with drink","Food");
 		 		 foodMenu.SelectRestaurantMenu("Food");
-				 setMenu.CreateSetMenu(foodMenu.ReadSelectionMenu(),drinkMenu.ReadRestaurantMenu());
-				 setMenu.OutputTextFile(OneDrivePath, ShopID, "SubRestaurantMenu", "FoodSetMenu");
-				 setMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "DrinkSetMenu");
+				 setfoodMenu.CreateSetFoodMenu(foodMenu.ReadSelectionMenu());
+				 setdrinkMenu.CreateSetDrinkMenu(drinkMenu.ReadSelectionMenu());
+				 setfoodMenu.ShowRestaurantMenu("---   Set Menu   ---");
+				 setdrinkMenu.ShowRestaurantMenu("---   Drink Menu   ---");
+				 setfoodMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "FoodSetMenu");
+				 setdrinkMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "DrinkSetMenu");
 			 break;
-		 case 2 :setMenu.RemoveRestaurantSetMenu();
-		 		 setMenu.OutputTextFile(OneDrivePath, ShopID, "SubRestaurantMenu", "FoodSetMenu");
+		 case 2 :setfoodMenu.RemoveRestaurantMenu("Set");
+		 		 setfoodMenu.OutputTextFile(OneDrivePath, ShopID, "SubRestaurantMenu", "FoodSetMenu");
 			 break;
-		 case 3 :setMenu.ShowSubRestaurantMenu("---   Set Menu   ---");
-		 		 setMenu.ShowRestaurantMenu("---   Drink Menu   ---");
+		 case 3 :setfoodMenu.ShowRestaurantMenu("---   Set Menu   ---");
+		 		 setdrinkMenu.ShowRestaurantMenu("---   Drink Menu   ---");
 			 break;
 		 case 4 : quit = true;
 			 break;
@@ -142,7 +151,7 @@ public class ShopOwnerMainFlow extends PreOrder{
 	}
 	
 	public void SignUp() throws IOException, ClassNotFoundException{
-      selectShop.InputTextFile(OneDrivePath,"", "SelectShop", "");
+     selectShop.InputTextFile(OneDrivePath,"", "SelectShop", "");
 	  ShopID=selectShop.EditStringStringHashMap("select",OneDrivePath,"","");
 	  System.out.println("Welcome,"+ShopID+".\n"
 	  		+ "HereRice can makes you and your restaurant become famous.\n"
@@ -177,9 +186,12 @@ public class ShopOwnerMainFlow extends PreOrder{
     	  		+ "you may select some Special drink to add an extra-payment");
 	  foodMenu.SelectRestaurantMenuHelper("Select the food to create a set with drink","Food");
 	  foodMenu.SelectRestaurantMenu("Food");
-	  setMenu.CreateSetMenu(foodMenu.ReadSelectionMenu(),drinkMenu.ReadRestaurantMenu());
-	  setMenu.OutputTextFile(OneDrivePath, ShopID, "SubRestaurantMenu", "FoodSetMenu");
-	  setMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "DrinkSetMenu");
+	  setfoodMenu.CreateSetFoodMenu(foodMenu.ReadSelectionMenu());
+	  setdrinkMenu.CreateSetDrinkMenu(drinkMenu.ReadRestaurantMenu());
+	  setfoodMenu.ShowRestaurantMenu("---   Set Menu   ---");
+	  setdrinkMenu.ShowRestaurantMenu("---   Drink Menu   ---");
+	  setfoodMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "FoodSetMenu");
+	  setdrinkMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "DrinkSetMenu");
 	  System.out.println("Well done!!\n"
 	  		+ "your food Menu , Drink Menu and Set were created successfully.");
 	  Login("you are now entering to our setting page...");

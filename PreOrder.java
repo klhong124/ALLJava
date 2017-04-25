@@ -3,11 +3,12 @@ import java.util.Scanner;
 import java.io.IOException;
 
 public class PreOrder {
-	static RestaurantMenu foodMenu 	 = new RestaurantMenu();
-	static RestaurantMenu drinkMenu  = new RestaurantMenu();
-	static RestaurantMenu setMenu 	 = new RestaurantMenu();
-	static RestaurantMenu shopInfo	 = new RestaurantMenu();
-	static RestaurantMenu selectShop = new RestaurantMenu();
+	static RestaurantMenu foodMenu 	   = new RestaurantMenu();
+	static RestaurantMenu drinkMenu    = new RestaurantMenu();
+	static RestaurantMenu setfoodMenu  = new RestaurantMenu();
+	static RestaurantMenu setdrinkMenu = new RestaurantMenu();
+	static RestaurantMenu shopInfo	   = new RestaurantMenu();
+	static RestaurantMenu selectShop   = new RestaurantMenu();
 	static ShopOwnerMainFlow shopOwnerMainFlow = new ShopOwnerMainFlow();
 	static CustomerMainFlow customerMainFlow = new CustomerMainFlow();
 	public static Scanner input;
