@@ -1,5 +1,6 @@
 package ALLJava;
 import java.util.Scanner;
+import java.io.File;
 import java.io.IOException;
 
 public class PreOrder {
@@ -19,9 +20,16 @@ public class PreOrder {
 	    input = new Scanner(System.in);
 	    System.out.println("Welcome to HereRice.\n"
 	    		+ "Enter OneDrivePath To get Started");
-	    OneDrivePath=input.nextLine();
-	    while (true){
-	    System.out.println("[1]Customer\t[2]ShopOwner");
+	    while (true) {OneDrivePath=input.nextLine();
+	    File file =new File(OneDrivePath+"\\SelectShop.txt");
+	    if(file.exists()){
+	    	System.out.println("Correct Path !");break;
+	    }else{System.out.println("Incorrect Path !\n"
+	    		+ "Please Try Again... :");}}
+	    boolean quit = false;
+	    while (quit != true){
+	    System.out.print("\n[1]Customer\t[2]ShopOwner\n"
+	    		+ "Select by Entering a number:");
 	    String customerORshopowner=input.nextLine();
 	    switch (customerORshopowner){
 	    case "1":
@@ -31,8 +39,7 @@ public class PreOrder {
 	    	shopOwnerMainFlow.mainflow();
 	    	break;
 	    default :
-	    	System.out.println("Try Again...");
-	    	break;
+	    	System.out.println("Please Try Again... :");
 	    }
 	 }
   }

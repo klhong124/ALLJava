@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class ShopOwnerMainFlow extends PreOrder{
-	
+	boolean quit = false;
 	public void mainflow() throws IOException, ClassNotFoundException{
 		foodMenu.CLEAR();
 		drinkMenu.CLEAR();
@@ -12,11 +12,12 @@ public class ShopOwnerMainFlow extends PreOrder{
 		setdrinkMenu.CLEAR();
 		shopInfo.CLEAR();
 		selectShop.CLEAR();
-	    System.out.println("Select by entering the number,\n"
-	    		+ "[1]Login\t[2]Sign up\t[3]Exit");
-	    int LoginSignUp=Integer.parseInt(input.nextLine());
+		while (quit != true){
+	    System.out.print("\n[1]Login\t[2]Sign up\t[3]Exit\n"
+	    		+ "Select by Entering number:");
+	    String LoginSignUp=input.nextLine();
 	    switch(LoginSignUp){
-	    case  1 :
+	    case "1" :
 	    	while(true){
 			System.out.print("Enter a ShopID.");
 		  	  ShopID=input.nextLine();
@@ -24,11 +25,12 @@ public class ShopOwnerMainFlow extends PreOrder{
 				  if(!folder.exists()&&!folder.isDirectory()){System.out.println("Try again, ShopID doesn't exist");}
 				  else{break;}}
 	    	Login("welcome back, "+ShopID);
-	    	break;
-	    case  2 :SignUp();
-	    	break;  
-	    case  3 :
-	    	break;
+	    	quit = true;break;
+	    case  "2" :SignUp();
+	    quit = true;break;
+	    case  "3" :
+	    	quit = true;break;
+	    default:System.out.println("Please Try Again... :");}
 	    }
 	}
 
@@ -41,117 +43,121 @@ public class ShopOwnerMainFlow extends PreOrder{
 		boolean quit = false;
 		 System.out.println(welcome);
 		 while (quit != true){
-			 System.out.print("[1]Edit Food Menu\n"
+			 System.out.print("\n[1]Edit Food Menu\n"
 			 				+ "[2]Edit Drink Menu\n"
 			 				+ "[3]Edit Set Menu\n"
 			 				+ "[4]Edit Shop Information\n"
 			 				+ "[5]LogOut\n"
-			 				+ "Enter a number:");
-		 int option=Integer.parseInt(input.nextLine());
+			 				+ "Select by Entering a number:");
+		 String option=input.nextLine();
 		 switch (option){
-		 case 1 :LoginSwitchFood();
+		 case "1" :LoginSwitchFood();
 			 break;
-		 case 2 :LoginSwitchDrink();
+		 case "2" :LoginSwitchDrink();
 			 break;
-		 case 3 :LoginSwitchSet();
+		 case "3" :LoginSwitchSet();
 			 break;
-		 case 4:shopInfo.ShowShopInformation();
+		 case "4":shopInfo.ShowShopInformation();
 		 		shopInfo.EditStringStringHashMap("info","OneDrivePath","","");
 		 		System.out.println("Updated :");
 		 		shopInfo.ShowShopInformation();
 		 		shopInfo.OutputTextFile(OneDrivePath, ShopID, "ShopInfo", null);
 			 break;
-		 case 5 :quit = true;
+		 case "5" :quit = true; System.out.println("You have been LogOut.");
 			 break;
+		 default:System.out.println("Please Try Again... :");
 		  }
 		 }
 		}
 	private void LoginSwitchSet() throws IOException{
 		boolean quit = false;
 		 while (quit != true){
-			 System.out.print("[EDIT MODE]-Set Menu\n"
+			 System.out.print("\n[EDIT MODE]-Set Menu\n"
 					 		+ "[1]Create Set Menu(s)\n"
 					 		+ "[2]Remove Set\n"
 					 		+ "[3]Read Menu\n"
 					 		+ "[4]Exit\n"
-					 		+ "Enter a number:");
-		 int option=Integer.parseInt(input.nextLine());
+					 		+ "Select by Entering a number:");
+		 String option=input.nextLine();
 		 switch (option){
-		 case 1 :
+		 case "1" :
 			 	 foodMenu.SelectRestaurantMenuHelper("Select the food to create a set with drink","Food");
 		 		 foodMenu.SelectRestaurantMenu("Food");
 				 setfoodMenu.CreateSetFoodMenu(foodMenu.ReadSelectionMenu());
 				 setdrinkMenu.CreateSetDrinkMenu(drinkMenu.ReadSelectionMenu());
-				 setfoodMenu.ShowRestaurantMenu("---   Set Menu   ---");
-				 setdrinkMenu.ShowRestaurantMenu("---   Drink Menu   ---");
+				 setfoodMenu.ShowRestaurantMenu("---       Set Menu       ---");
+				 setdrinkMenu.ShowRestaurantMenu("---       Drink Menu      ---");
 				 setfoodMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "FoodSetMenu");
 				 setdrinkMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "DrinkSetMenu");
 			 break;
-		 case 2 :setfoodMenu.RemoveRestaurantMenu("Set");
+		 case "2" :setfoodMenu.RemoveRestaurantMenu("Set");
 		 		 setfoodMenu.OutputTextFile(OneDrivePath, ShopID, "SubRestaurantMenu", "FoodSetMenu");
 			 break;
-		 case 3 :setfoodMenu.ShowRestaurantMenu("---   Set Menu   ---");
-		 		 setdrinkMenu.ShowRestaurantMenu("---   Drink Menu   ---");
+		 case "3" :setfoodMenu.ShowRestaurantMenu("---       Set Menu       ---");
+		 		 setdrinkMenu.ShowRestaurantMenu("---       Drink Menu      ---");
 			 break;
-		 case 4 : quit = true;
+		 case "4" : quit = true;
 			 break;
+		 default:System.out.println("Please Try Again... :");
 			 }
 		 }
 	}
 	private void LoginSwitchFood() throws IOException{
 		boolean quit = false;
 		 while (quit != true){
-			 System.out.print("[EDIT MODE]- FoodMenu\n"
+			 System.out.print("\n[EDIT MODE]- FoodMenu\n"
 					 		+ "[1]Add item(s)\n"
 					 		+ "[2]Remove item\n"
 					 		+ "[3]Read Menu\n"
 					 		+ "[4]Exit\n"
-					 		+ "Enter a number:");
-		 int option=Integer.parseInt(input.nextLine());
+					 		+ "Select by Entering a number:");
+		 String option=input.nextLine();
 		 switch (option){
-		 case 1 :foodMenu.AddRestaurantMenu("Food");
+		 case "1" :foodMenu.AddRestaurantMenu("Food");
 		 		 foodMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu","FoodMenu");
 			 break;
-		 case 2 :foodMenu.RemoveRestaurantMenu("Food");
+		 case "2" :foodMenu.RemoveRestaurantMenu("Food");
 		 		 foodMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "FoodMenu");
 			 break;
-		 case 3 :foodMenu.ShowRestaurantMenu("---   Food Menu   ---");
+		 case "3" :foodMenu.ShowRestaurantMenu("---      Food Menu      ---");
 			 break;
-		 case 4 : quit = true;
+		 case "4" : quit = true;
 			 break;
+		 default:System.out.println("Please Try Again... :");
 			 }
 		 }
 	}
 	private void LoginSwitchDrink() throws IOException{
 		boolean quit = false;
 		 while (quit != true){
-			 System.out.print("[EDIT MODE]- FoodMenu\n"
+			 System.out.print("\n[EDIT MODE]- DrinkMenu\n"
 					 		+ "[1]Add item(s)\n"
 					 		+ "[2]Remove item\n"
 					 		+ "[3]Read Menu\n"
 					 		+ "[4]Create Cold Drink\n"
 					 		+ "[5]Exit\n"
-					 		+ "Enter a number:");
-		 int option=Integer.parseInt(input.nextLine());
+					 		+ "Select by Entering a number:");
+		 String option=input.nextLine();
 		 switch (option){
-		 case 1 :drinkMenu.AddRestaurantMenu("Food");
+		 case "1" :drinkMenu.AddRestaurantMenu("Food");
 		 		 drinkMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu","DrinkMenu");
 			 break;
-		 case 2 :drinkMenu.RemoveRestaurantMenu("Drink");
+		 case "2" :drinkMenu.RemoveRestaurantMenu("Drink");
 		 		 drinkMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "DrinkMenu");
 			 break;
-		 case 3 :drinkMenu.ShowRestaurantMenu("---   Drink Menu   ---");
+		 case "3" :drinkMenu.ShowRestaurantMenu("---      Drink Menu      ---");
 			 break;
-		 case 4 :drinkMenu.CreateColdDrinkMenu();
+		 case "4" :drinkMenu.CreateColdDrinkMenu();
 			 break;
-		 case 5 : quit = true;
+		 case "5" : quit = true;
 			 break;
+		 default:System.out.println("Please Try Again... :");
 			 }
 		 }
 	}
 	
 	public void SignUp() throws IOException, ClassNotFoundException{
-     selectShop.InputTextFile(OneDrivePath,"", "SelectShop", "");
+	  selectShop.InputTextFile(OneDrivePath,"", "SelectShop", "");
 	  ShopID=selectShop.EditStringStringHashMap("select",OneDrivePath,"","");
 	  System.out.println("Welcome,"+ShopID+".\n"
 	  		+ "HereRice can makes you and your restaurant become famous.\n"
