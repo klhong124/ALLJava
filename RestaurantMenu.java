@@ -213,14 +213,34 @@ public class RestaurantMenu {
 		("[Edit mode]"+type+" menu.\n"+
 		 "How many item(s) you would like to add?\n"
 		 + "Enter a number:");
-		int NumberOfItemToAdd = Integer.parseInt(input.nextLine());
+		int NumberOfItemToAdd = 0;
+		while (NumberOfItemToAdd == 0) {
+			try {
+				NumberOfItemToAdd = Integer.parseInt(input.nextLine());
+			} catch (NumberFormatException ie)
+			{
+				NumberOfItemToAdd = 0;
+				System.out.print
+				("[Edit mode]"+type+" menu.\n"+
+				 "How many item(s) you would like to add?\n"
+				 + "Enter a number:"); //statement to print when they enter string
+			}
+		}
 		for(int looptimes = 0; looptimes<NumberOfItemToAdd-1;looptimes++){
 		System.out.print("Step one: Name of "+type+"\n"
 				+ "Step two: Price of it\n"
 				+"["+Integer.toString(NumberOfItemToAdd-looptimes)+" left]Enter Name:");
 		String item = input.nextLine()+"\t";
 		System.out.print("\tEnter Cost:");
-		double price = Double.parseDouble(input.nextLine());
+		double price = 0;
+		while (price == 0) {
+			try {
+				price = Double.parseDouble(input.nextLine());
+			} catch (NumberFormatException ie) {
+				price = 0;
+				System.out.print("\tEnter Cost:");
+			}
+		}
 	    RestaurantMenu.put(item,price);	
 	    ShowRestaurantMenu("-----      Preview\t    -----");}
 		System.out.print("Step one: Name of "+type+"\n"
