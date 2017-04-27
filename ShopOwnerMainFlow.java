@@ -5,13 +5,8 @@ import java.io.IOException;
 
 public class ShopOwnerMainFlow extends PreOrder{
 	boolean quit = false;
+	int x;double y;int z;
 	public void mainflow() throws IOException, ClassNotFoundException{
-		foodMenu.CLEAR();
-		drinkMenu.CLEAR();
-		setfoodMenu.CLEAR();
-		setdrinkMenu.CLEAR();
-		shopInfo.CLEAR();
-		selectShop.CLEAR();
 		while (quit != true){
 	    System.out.print("\n[1]Login\t[2]Sign up\t[3]Exit\n"
 	    		+ "Select by Entering number:");
@@ -47,7 +42,8 @@ public class ShopOwnerMainFlow extends PreOrder{
 			 				+ "[2]Edit Drink Menu\n"
 			 				+ "[3]Edit Set Menu\n"
 			 				+ "[4]Edit Shop Information\n"
-			 				+ "[5]LogOut\n"
+			 				+ "[5]Operate my business\n"
+			 				+ "[6]LogOut\n"
 			 				+ "Select by Entering a number:");
 		 String option=input.nextLine();
 		 switch (option){
@@ -63,12 +59,19 @@ public class ShopOwnerMainFlow extends PreOrder{
 		 		shopInfo.ShowShopInformation();
 		 		shopInfo.OutputTextFile(OneDrivePath, ShopID, "ShopInfo", null);
 			 break;
-		 case "5" :quit = true; System.out.println("You have been LogOut.");
+		 case "5" :try {while(true){
+			 	Operating();
+			    Thread.sleep(5000);}
+		 } catch (InterruptedException ie)
+		 {System.out.println("Scanning...");}
+		 	 break;
+		 case "6" :quit = true; System.out.println("You have been LogOut.");
 			 break;
 		 default:System.out.println("Please Try Again... :");
 		  }
 		 }
 		}
+
 	private void LoginSwitchSet() throws IOException{
 		boolean quit = false;
 		 while (quit != true){
@@ -85,16 +88,16 @@ public class ShopOwnerMainFlow extends PreOrder{
 		 		 foodMenu.SelectRestaurantMenu("Food");
 				 setfoodMenu.CreateSetFoodMenu(foodMenu.ReadSelectionMenu());
 				 setdrinkMenu.CreateSetDrinkMenu(drinkMenu.ReadSelectionMenu());
-				 setfoodMenu.ShowRestaurantMenu("---       Set Menu       ---");
-				 setdrinkMenu.ShowRestaurantMenu("---       Drink Menu      ---");
+				 setfoodMenu.ShowRestaurantMenu("==========Set Menu===========");
+				 setdrinkMenu.ShowRestaurantMenu("==========Drink Menu=========");
 				 setfoodMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "FoodSetMenu");
 				 setdrinkMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "DrinkSetMenu");
 			 break;
 		 case "2" :setfoodMenu.RemoveRestaurantMenu("Set");
 		 		 setfoodMenu.OutputTextFile(OneDrivePath, ShopID, "SubRestaurantMenu", "FoodSetMenu");
 			 break;
-		 case "3" :setfoodMenu.ShowRestaurantMenu("---       Set Menu       ---");
-		 		 setdrinkMenu.ShowRestaurantMenu("---       Drink Menu      ---");
+		 case "3" :setfoodMenu.ShowRestaurantMenu("==========Set Menu===========");
+		 		 setdrinkMenu.ShowRestaurantMenu("==========Drink Menu=========");
 			 break;
 		 case "4" : quit = true;
 			 break;
@@ -119,7 +122,7 @@ public class ShopOwnerMainFlow extends PreOrder{
 		 case "2" :foodMenu.RemoveRestaurantMenu("Food");
 		 		 foodMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "FoodMenu");
 			 break;
-		 case "3" :foodMenu.ShowRestaurantMenu("---      Food Menu      ---");
+		 case "3" :foodMenu.ShowRestaurantMenu("==========Food Menu==========");
 			 break;
 		 case "4" : quit = true;
 			 break;
@@ -145,7 +148,7 @@ public class ShopOwnerMainFlow extends PreOrder{
 		 case "2" :drinkMenu.RemoveRestaurantMenu("Drink");
 		 		 drinkMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "DrinkMenu");
 			 break;
-		 case "3" :drinkMenu.ShowRestaurantMenu("---      Drink Menu      ---");
+		 case "3" :drinkMenu.ShowRestaurantMenu("==========Drink Menu=========");
 			 break;
 		 case "4" :drinkMenu.CreateColdDrinkMenu();
 			 break;
@@ -156,6 +159,47 @@ public class ShopOwnerMainFlow extends PreOrder{
 		 }
 	}
 	
+	private void Operating() throws ClassNotFoundException, IOException{
+		OrderNumber=10000;
+		quit = false;
+	      while (quit != true){
+	      	File folder=new File (OneDrivePath+"\\"+ShopID+"\\Order\\"+Integer.toString(OrderNumber));
+	      	if(folder.exists()){OrderNumber++;}else{OrderNumber=OrderNumber-1;quit=true;}};
+		System.out.println("\nHere is your Order:");
+		x=0;y=0;z=1;double[][] calculator={{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
+		
+		while (true){
+			File file =new File(OneDrivePath+"\\"+ShopID+"\\Order\\"+Integer.toString(OrderNumber)+"\\FoodMenuOrder"+String.valueOf(x));
+			if(file.exists()){
+				foodMenu.InputTextFile(OneDrivePath, ShopID, "SelectionMenu", Integer.toString(OrderNumber)+"\\FoodMenuOrder"+String.valueOf(x)+"\\FoodOrder");
+				System.out.println("Order ["+z+"]");z++;
+				foodMenu.ShowSelectionMenu("Food","");
+				calculator[0][x]=foodMenu.Calculator();
+				x++;}else{x=0;break;}}
+		while (true){
+			File file =new File(OneDrivePath+"\\"+ShopID+"\\Order\\"+Integer.toString(OrderNumber)+"\\DrinkMenuOrder"+String.valueOf(x));
+			if(file.exists()){
+				drinkMenu.InputTextFile(OneDrivePath, ShopID, "SelectionMenu", Integer.toString(OrderNumber)+"\\DrinkMenuOrder"+String.valueOf(x)+"\\DrinkOrder");
+				System.out.println("\nOrder ["+z+"]");z++;
+				drinkMenu.ShowSelectionMenu("Drink","");
+				calculator[1][x]=drinkMenu.Calculator();
+				x++;}else{x=0;break;}}
+		while (true){
+			File file =new File(OneDrivePath+"\\"+ShopID+"\\Order\\"+Integer.toString(OrderNumber)+"\\SetMenuOrder"+String.valueOf(x));
+			if(file.exists()){
+				setfoodMenu.InputTextFile(OneDrivePath, ShopID, "SelectionMenu", Integer.toString(OrderNumber)+"\\SetMenuOrder"+String.valueOf(x)+"\\SetFoodOrder");
+				setdrinkMenu.InputTextFile(OneDrivePath, ShopID, "SelectionMenu", Integer.toString(OrderNumber)+"\\SetMenuOrder"+String.valueOf(x)+"\\SetDrinkOrder");
+				System.out.println("\nOrder ["+z+"]");z++;
+				setfoodMenu.ShowSelectionMenu(" Set ","");
+				setdrinkMenu.ShowSelectionMenu("Drink","");
+				calculator[2][x]=setfoodMenu.Calculator()+setdrinkMenu.Calculator();
+					x++;}else{x=0;break;}}
+			for(y=0;x<10;x++){y=y+calculator[0][x]+calculator[1][x]+calculator[2][x];}
+		System.out.println("==============================\n\n"
+				+ "Total:\t\t$"+y);	
+		
+		}
+
 	public void SignUp() throws IOException, ClassNotFoundException{
 	  selectShop.InputTextFile(OneDrivePath,"", "SelectShop", "");
 	  ShopID=selectShop.EditStringStringHashMap("select",OneDrivePath,"","");
@@ -194,8 +238,8 @@ public class ShopOwnerMainFlow extends PreOrder{
 	  foodMenu.SelectRestaurantMenu("Food");
 	  setfoodMenu.CreateSetFoodMenu(foodMenu.ReadSelectionMenu());
 	  setdrinkMenu.CreateSetDrinkMenu(drinkMenu.ReadRestaurantMenu());
-	  setfoodMenu.ShowRestaurantMenu("---   Set Menu   ---");
-	  setdrinkMenu.ShowRestaurantMenu("---   Drink Menu   ---");
+	  setfoodMenu.ShowRestaurantMenu("==========Set Menu===========");
+	  setdrinkMenu.ShowRestaurantMenu("==========Drink Menu=========");
 	  setfoodMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "FoodSetMenu");
 	  setdrinkMenu.OutputTextFile(OneDrivePath, ShopID, "RestaurantMenu", "DrinkSetMenu");
 	  System.out.println("Well done!!\n"

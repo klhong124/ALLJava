@@ -15,6 +15,7 @@ public class PreOrder {
 	public static Scanner input;
 	public static String ShopID;
 	public static String ShopName;
+	public static int OrderNumber;
 	public static String OneDrivePath;
   public static void main(String[] args) throws IOException, ClassNotFoundException {
 	    input = new Scanner(System.in);
