@@ -53,7 +53,16 @@ public class RestaurantMenu {
 		SelectRestaurantMenu("Drink");
 		StringStringHashMap.keySet().clear();
 		System.out.print("Enter the extra-payment for Cold Drink.");
-		double extrapayment = Double.parseDouble(input.nextLine());
+		double extrapayment = 0;
+		while (extrapayment == 0) {
+			try {
+				extrapayment = Double.parseDouble(input.nextLine());
+			} catch (NumberFormatException ie) {
+				extrapayment = 0; //back to start of while loop
+				System.out.println("Please try again......");
+				System.out.print("Enter the extra-payment for Cold Drink.");
+			}
+		}
 		for (String items : ReadSelectionMenu().keySet()) {
 			String item = items+"(Cold)";
 			String price = String.valueOf(ReadSelectionMenu().get(items)+extrapayment);
@@ -113,10 +122,29 @@ public class RestaurantMenu {
 		System.out.print("Command:");
 			String NumberDoneAll = input.nextLine(); 
 		StringStringHashMap.clear();
-		switch (NumberDoneAll){
-		case "done":InputCounter=true;break;
-		case "all" :InputCounter=false;break;
-		default:InputCounter=InputCounterArray[Integer.valueOf(NumberDoneAll)-1];break;}
+		boolean situation = true; //situation that following while loop will start
+		while (situation == true) {
+			if(NumberDoneAll.length()==0){//if input is empty
+				System.out.println("Please try again...");
+				System.out.print("Command:");
+				NumberDoneAll = input.nextLine();
+			}else if(Character.isLetter(NumberDoneAll.charAt(0))){//if input is letter
+				switch (NumberDoneAll){
+				case "done":InputCounter=true; situation=false;break;
+				case "all" :InputCounter=false;situation=false;break;
+				default: System.out.println("Please try again");System.out.print("Command:");NumberDoneAll = input.nextLine();
+				}
+			}else {//if input is digit
+				try {
+					InputCounter=InputCounterArray[Integer.valueOf(NumberDoneAll)-1];
+					situation=false;
+				}catch(ArrayIndexOutOfBoundsException ie){
+					System.out.println("It is out of the array");
+					System.out.print("Command:");
+					NumberDoneAll = input.nextLine();
+				}
+			}
+		}
 		if(InputCounter==true){
 		if (NumberDoneAll.equals("done")){break;}
 	    else{
@@ -216,9 +244,10 @@ public class RestaurantMenu {
 			{
 				NumberOfItemToAdd = 0;
 				System.out.print
-				("[Edit mode]"+type+" menu.\n"+
+				("Please try again...\n\n"+
+				"[Edit mode]"+type+" menu.\n"+
 				 "How many item(s) you would like to add?\n"
-				 + "Enter a number:"); //statement to print when they enter string
+				 + "Enter a number:"); 
 			}
 		}
 		for(int looptimes = 0; looptimes<NumberOfItemToAdd-1;looptimes++){
@@ -243,7 +272,15 @@ public class RestaurantMenu {
 				+"[1 left]Enter Name:");
 		String item = input.nextLine()+"\t";
 		System.out.print("\tEnter Cost:");
-		double price = Double.parseDouble(input.nextLine());
+		double price = 0;
+		while (price == 0) {
+			try {
+				price = Double.parseDouble(input.nextLine());
+			} catch (NumberFormatException ie) {
+				price = 0;
+				System.out.print("\tEnter Cost:");
+			}
+		}
 	    RestaurantMenu.put(item,price);	
 	    System.out.println("Your "+type+" menu is saved as:");
 	    ShowRestaurantMenu("=========="+type+" Menu==========");}
@@ -253,7 +290,16 @@ public class RestaurantMenu {
 		for(String items : FoodMenu.keySet()){
 			System.out.println("Enter the Price of "+items+"(Set)");
 			String item  = items+"(Set)";
-			double price = Double.parseDouble(input.nextLine());
+			double price = 0;
+			while (price == 0) {
+				try {
+					price = Double.parseDouble(input.nextLine());
+				} catch (NumberFormatException ie) {
+					price = 0;
+					System.out.println("Please try again");
+					System.out.println("Enter the Price of "+items+"(Set)");
+				}
+			}
 			RestaurantMenu.put(item,price);
 			ShowRestaurantMenu("==========Preview==========");}}
 	public void CreateSetDrinkMenu(HashMap<String,Double> DrinkMenu){
