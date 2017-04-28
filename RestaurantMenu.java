@@ -83,8 +83,18 @@ public class RestaurantMenu {
 	
 	public String ReadStringStringHashMapSelectionID(int Number){
 		String [] Restaurant  = new String [StringStringHashMap.size()]; int item = 0 ;for(String items : StringStringHashMap.keySet()){Restaurant[item] = items;item++;};
-	    String Selection = StringStringHashMap.get(Restaurant[Number-1]);
-	    return Selection;}
+	    //String Selection = StringStringHashMap.get(Restaurant[Number-1]);
+		String Selection = "";
+		String outOfBound = "true";
+		try {
+			Selection = StringStringHashMap.get(Restaurant[Number-1]);
+			outOfBound = "false";
+			return Selection;
+		}catch (ArrayIndexOutOfBoundsException arr){
+			outOfBound = "true";
+			return outOfBound;
+		}
+	}
 	public String ReadStringStringHashMapSelectionNAME(int Number){
 		String [] Restaurant  = new String [StringStringHashMap.size()]; int item = 0 ;for(String items : StringStringHashMap.keySet()){Restaurant[item] = items;item++;};
 	    String Selection = Restaurant[Number-1];

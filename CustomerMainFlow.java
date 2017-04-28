@@ -88,6 +88,20 @@ public class CustomerMainFlow extends PreOrder{
 	      OrderNumber=10000;
 	      while (quit != true){
 	      	File folder=new File (OneDrivePath+"\\"+selectShop.ReadStringStringHashMapSelectionID(number)+"\\Order\\"+Integer.toString(OrderNumber));
+	      	while (selectShop.ReadStringStringHashMapSelectionID(number)=="true") {
+	      		selectShop.ShowRestaurant();  	
+	  	      number = 0;
+	  			while (number == 0) {
+	  				try {
+	  					System.out.print("Select a Restaurant by Entering a number:");
+	  					number = Integer.parseInt(input.nextLine());
+	  				} catch (NumberFormatException ie)
+	  				{
+	  					number = 0;
+	  					System.out.println("Please try again...");
+	  				} 
+	  			}
+	      	}
 	      	if(!folder.exists()){new File(OneDrivePath+"\\"+selectShop.ReadStringStringHashMapSelectionID(number)+"\\Order\\"+Integer.toString(OrderNumber)).mkdir();
 	      	quit=true;}else{OrderNumber++;}};
 	      	foodMenu.InputTextFile(OneDrivePath,selectShop.ReadStringStringHashMapSelectionID(number),"RestaurantMenu","FoodMenu");
@@ -103,7 +117,7 @@ public class CustomerMainFlow extends PreOrder{
 					  "[1]Food Menu\n"
 					+ "[2]Drink Menu\n"
 					+ "[3]Set Menu\n"
-					+ "[4]Read Order\n"
+					+ "[4]Read Order (included order no.)\n"
 					+ "[5]Del Order\n"
 					+ "[6]Quit\n"
 					+"Select the options by Entering a number:");
@@ -160,6 +174,7 @@ public class CustomerMainFlow extends PreOrder{
 				quit=payORnot(selectShop.ReadStringStringHashMapSelectionID(number),"SET");
 				break;
 			case "4":ReadOrderBill();
+				System.out.println("\nYour order no. is: " + OrderNumber +" (Please show it when you take your food)\n");
 				System.out.print("(press Enter to continue)");
 				input.nextLine();
 				break;
