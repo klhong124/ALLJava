@@ -1,3 +1,8 @@
+/**
+ * Show the main flow of restaurant owners
+ * @author ALL Boys Project Team
+ * @version 1.0
+ */
 package ALLJava;
 
 import java.io.File;
@@ -6,6 +11,13 @@ import java.io.IOException;
 public class ShopOwnerMainFlow extends PreOrder{
 	boolean quit = false;
 	int x;double y;int z;
+	
+	/**
+	 * This method show the procedure of the main flow of restaurant owners
+	 * And show what method are called in the main flow of restaurant owners
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public void mainflow() throws IOException, ClassNotFoundException{
 		while (quit != true){
 	    System.out.print("\n[1]Login\t[2]Sign up\t[3]Exit\n"
@@ -29,6 +41,14 @@ public class ShopOwnerMainFlow extends PreOrder{
 	    }
 	}
 
+	/**
+	 * This is the method for restaurant owners who have already signed up a restaurant
+	 * This method prompt restaurant owners to do action for their account in HereRice
+	 * They can edit menu, edit shop information and start operating their business
+	 * @param welcome
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public void Login(String welcome) throws IOException, ClassNotFoundException{
 		foodMenu.InputTextFile(OneDrivePath,ShopID,"RestaurantMenu","FoodMenu");
 		drinkMenu.InputTextFile(OneDrivePath,ShopID,"RestaurantMenu","DrinkMenu");

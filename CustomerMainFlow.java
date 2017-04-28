@@ -1,19 +1,25 @@
+/**
+ * Show the main flow of customers
+ * @author ALL Boys Project Team
+ * @version 1.0
+ */
 package ALLJava;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-/**
- * Show the main flow of customers
- * @author ALL Boys Project Team
- * @version 1.0
- */
 public class CustomerMainFlow extends PreOrder{  
 	HashMap<Integer,String>RemoveMenu=new HashMap<Integer,String>();
 	int number;
 	boolean quit = false;
 	int x;double y;int z;
+	
+	/**
+	 * Reading order
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	private void ReadOrderBill() throws ClassNotFoundException, IOException{
 		System.out.println("\nHere is your Order:");
 		x=0;y=0;z=1;double[][] calculator={{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
@@ -55,7 +61,6 @@ public class CustomerMainFlow extends PreOrder{
 	 * After choosing their food, this method ask customers to decide whether they want to continue, cancel or pay
 	 * @param shopID
 	 * @param Order
-	 * @return 
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
@@ -82,6 +87,12 @@ public class CustomerMainFlow extends PreOrder{
 		}
 		return !quit;}
 
+	/**
+	 * This method show the procedure of the main flow of customers
+	 * And show what method are called in the main flow of customers
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	public void mainflow() throws ClassNotFoundException, IOException {
 		System.out.println("\nWelcome to HereRice !\n"
 				+ "Choose a Restaurant below:");
