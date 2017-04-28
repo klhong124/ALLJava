@@ -73,9 +73,18 @@ public class CustomerMainFlow extends PreOrder{
 		System.out.println("\nWelcome to HereRice !\n"
 				+ "Choose a Restaurant below:");
 	      selectShop.InputTextFile(OneDrivePath,"", "SelectShop", "");
-	      selectShop.ShowRestaurant();
-	      System.out.print("Select a Restaurant by Entering a number:");
-	      number=Integer.parseInt(input.nextLine());   	
+	      selectShop.ShowRestaurant();  	
+	      number = 0;
+			while (number == 0) {
+				try {
+					System.out.print("Select a Restaurant by Entering a number:");
+					number = Integer.parseInt(input.nextLine());
+				} catch (NumberFormatException ie)
+				{
+					number = 0;
+					System.out.println("Please try again...");
+				} 
+			}
 	      OrderNumber=10000;
 	      while (quit != true){
 	      	File folder=new File (OneDrivePath+"\\"+selectShop.ReadStringStringHashMapSelectionID(number)+"\\Order\\"+Integer.toString(OrderNumber));
@@ -155,8 +164,17 @@ public class CustomerMainFlow extends PreOrder{
 				input.nextLine();
 				break;
 			case "5":ReadOrderBill();
-				System.out.print("Enter the Order number to remove it.");
-				z=Integer.parseInt(input.nextLine());
+				z = 0;
+				while (z == 0) {
+					try {
+						System.out.print("Enter the Order number to remove it.");
+						z = Integer.parseInt(input.nextLine());
+					} catch (NumberFormatException ie)
+					{
+						z = 0;
+						System.out.println("Please try again...");
+					}
+				}
 						   File remove = new File(OneDrivePath+"\\"+selectShop.ReadStringStringHashMapSelectionID(number)+"\\Order\\"+Integer.toString(OrderNumber)+"\\"+RemoveMenu.get(z)+"\\SetFoodOrder.txt");remove.delete();
 						   		remove = new File(OneDrivePath+"\\"+selectShop.ReadStringStringHashMapSelectionID(number)+"\\Order\\"+Integer.toString(OrderNumber)+"\\"+RemoveMenu.get(z)+"\\SetDrinkOrder.txt");remove.delete();
 						   		remove = new File(OneDrivePath+"\\"+selectShop.ReadStringStringHashMapSelectionID(number)+"\\Order\\"+Integer.toString(OrderNumber)+"\\"+RemoveMenu.get(z)+"\\FoodOrder.txt");remove.delete();

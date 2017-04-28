@@ -114,13 +114,13 @@ public class RestaurantMenu {
 		}
 	public void SelectRestaurantMenu(String Type){
 		input = new Scanner(System.in);
-		boolean InputCounter;
+		boolean InputCounter = false;
 		boolean[] InputCounterArray = new boolean [StringStringHashMap.size()]; for(int items=0 ;items<StringStringHashMap.size();items++){InputCounterArray[items] = true;};
 		while (true){
 		String [] OrderItem  = new String [StringStringHashMap.size()]; int item = 0 ;for(String items : StringStringHashMap.keySet()){OrderItem   [item] = items;item++;};
 		String [] OrderPrice = new String [StringStringHashMap.size()];	   item = 0 ;for(String items : StringStringHashMap.keySet()){OrderPrice  [item] = StringStringHashMap.get(items);item++;}
 		System.out.print("Command:");
-			String NumberDoneAll = input.nextLine(); 
+		String NumberDoneAll = input.nextLine(); 
 		StringStringHashMap.clear();
 		boolean situation = true; //situation that following while loop will start
 		while (situation == true) {
