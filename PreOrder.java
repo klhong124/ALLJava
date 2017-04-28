@@ -1,3 +1,11 @@
+/**
+ * An API which do pre-order
+ * <p>Restaurant owners can create menu here for customers to place orders
+ * Customers can place orders through this API
+ * <p>Main is included in this class
+ * @author ALL Boys Project Team
+ * @version 1.0
+ */
 package ALLJava;
 import java.util.Scanner;
 import java.io.File;

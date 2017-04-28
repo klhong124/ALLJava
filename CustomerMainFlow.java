@@ -4,6 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * Show the main flow of customers
+ * @author ALL Boys Project Team
+ * @version 1.0
+ */
 public class CustomerMainFlow extends PreOrder{  
 	HashMap<Integer,String>RemoveMenu=new HashMap<Integer,String>();
 	int number;
@@ -46,6 +51,14 @@ public class CustomerMainFlow extends PreOrder{
 				+ "Total:\t\t$"+y);	
 		}
 
+	/**
+	 * After choosing their food, this method ask customers to decide whether they want to continue, cancel or pay
+	 * @param shopID
+	 * @param Order
+	 * @return 
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	private boolean payORnot(String shopID,String Order) throws ClassNotFoundException, IOException{
 		while (quit != true){
 		System.out.print("\n[1]continue [2]cancel [3]confirm(pay)\n"
