@@ -9,6 +9,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * Show the main flow of customers
+ * @author ALL Boys Project Team
+ * @version 1.0
+ */
 public class CustomerMainFlow extends PreOrder{  
 	HashMap<Integer,String>RemoveMenu=new HashMap<Integer,String>();
 	int number;

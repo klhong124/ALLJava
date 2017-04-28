@@ -1,3 +1,8 @@
+/**
+ * A class which comprise of all action do on restaurant menu\
+ * @author ALL Boys Project Team
+ * @version 1.0
+ */
 package ALLJava;
 import java.util.HashMap;
 import java.io.File;
@@ -16,6 +21,16 @@ public class RestaurantMenu {
 	HashMap<String,Double> SelectionMenu 	   = new HashMap<String,Double>();
 	HashMap<String,String> StringStringHashMap = new HashMap<String,String>();
 
+	/**
+	 * This method will run when restaurant owners login or sign up
+	 * This is a method for restaurant owners to edit the information of the restaurants
+	 * @param infoORselect
+	 * @param oneDrivePath
+	 * @param ID
+	 * @param NAME
+	 * @return ShopID will be returned if ShopID is prompted to input, ShopName will be return if info is to be edited, else String: "null" will be returned 
+	 * @throws IOException
+	 */
 	public String EditStringStringHashMap(String infoORselect,String oneDrivePath,String ID,String NAME) throws IOException{
 		input = new Scanner(System.in);
 		String ShopID;
@@ -48,6 +63,9 @@ public class RestaurantMenu {
 		return null;
 	}
 	
+	/**
+	 * This is the method to select drinks from drink menu to copy as cold drink with extra-payment
+	 */
 	public void CreateColdDrinkMenu(){
 		SelectRestaurantMenuHelper("Select the drink to copy as a cold drink with extra-payment","Drink");
 		SelectRestaurantMenu("Drink");
@@ -74,16 +92,30 @@ public class RestaurantMenu {
 		System.out.println("Your Menu is now be like");
 		ShowRestaurantMenu("=========="+type+" Menu==========");}
 		
+	/**
+	 * This is to obtain the RestaurantMenu HashMap
+	 * @return RestaurantMenu HashMap will be return
+	 */
 	public HashMap<String,Double> ReadRestaurantMenu(){
 		return RestaurantMenu;}
+	/**
+	 * This is to obtain the SelectionMenu HashMap
+	 * @return SelectionMenu HashMap will be return
+	 */
 	public HashMap<String,Double> ReadSelectionMenu(){
 		return SelectionMenu;}
+	/**
+	 * This is to obtain the StringStringHashMap HashMap
+	 * @return StringStringHashMap HashMap will be return
+	 */
 	public HashMap<String,String> ReadStringStringHashMap(){
 		return StringStringHashMap;}
 	
+	/**
+	 * This is to search for restaurant
+	 */
 	public String ReadStringStringHashMapSelectionID(int Number){
 		String [] Restaurant  = new String [StringStringHashMap.size()]; int item = 0 ;for(String items : StringStringHashMap.keySet()){Restaurant[item] = items;item++;};
-	    //String Selection = StringStringHashMap.get(Restaurant[Number-1]);
 		String Selection = "";
 		String outOfBound = "true";
 		try {
@@ -95,11 +127,20 @@ public class RestaurantMenu {
 			return outOfBound;
 		}
 	}
+	/**
+	 * This is to search for restaurant and selected restaurant will be returned
+	 * @param Number
+	 * @return selected restaurant will be returned
+	 */
 	public String ReadStringStringHashMapSelectionNAME(int Number){
 		String [] Restaurant  = new String [StringStringHashMap.size()]; int item = 0 ;for(String items : StringStringHashMap.keySet()){Restaurant[item] = items;item++;};
 	    String Selection = Restaurant[Number-1];
 	    return Selection;}
 	
+	/**
+	 * This is used to remove item in menu
+	 * @param Type
+	 */
 	public void RemoveRestaurantMenu(String Type){
 		SelectRestaurantMenuHelper("select TO REMOVE item(s)",Type);
 		SelectRestaurantMenu(Type);
@@ -108,6 +149,11 @@ public class RestaurantMenu {
 		System.out.println("Your Menu is now be like");
 		ShowRestaurantMenu("----------" +Type+" Menu----------");}
 
+	/**
+	 * This is to prompt user to make selection from menu
+	 * @param Function
+	 * @param Type
+	 */
 	public void SelectRestaurantMenuHelper(String Function,String Type){
 		SelectionMenu.keySet().clear();
 		String[] OrderItem  = new String [RestaurantMenu.size()];int item = 0;for(String items : RestaurantMenu.keySet()){OrderItem[item] = items;item++;};
@@ -122,6 +168,10 @@ public class RestaurantMenu {
 				  + "Enter \"done\" > exit select mode");
 		ShowRestaurantMenu("=========="+Type+" Menu==========");
 		}
+	/**
+	 * This is used to make selection from menu
+	 * @param Type
+	 */
 	public void SelectRestaurantMenu(String Type){
 		input = new Scanner(System.in);
 		boolean InputCounter = false;
@@ -207,12 +257,21 @@ public class RestaurantMenu {
 	    }	
 	}
 	
+	/**
+	 * This is used show the selected menu on the screen
+	 * @param Type
+	 * @param End
+	 */
 	public void ShowSelectionMenu(String Type,String End){
 		System.out.println("=========="+Type+" Menu==========");
     for (String items : ReadSelectionMenu().keySet()) {
     	System.out.println(number+") "+items+"\t$"+SelectionMenu.get(items));number++;};
     	number = 1 ;
     System.out.print(End);}
+	/**
+	 * This is used to show the restaurant menu
+	 * @param title
+	 */
 	public void ShowRestaurantMenu(String title){
 	    System.out.println(title);
 	    for (String items : RestaurantMenu.keySet()) {
@@ -220,25 +279,37 @@ public class RestaurantMenu {
 	    	number = 1 ;
 	    System.out.println("----------------------------");
 	    }
-
+	/**
+	 * This is used to show the menu according to the parameter title
+	 * @param title
+	 */
 	public void ShowStringStringHashMap(String title){ 
 		System.out.println(title);
     for (String items : StringStringHashMap.keySet()) {
     	System.out.println(number+") "+items+"\t$"+StringStringHashMap.get(items));number++;};
     	number = 1 ;
     System.out.println("==============================");}
+	/**
+	 * This is to show shop information
+	 */
 	public void ShowShopInformation(){
 		System.out.println("\n==========Shop Info.==========");
 	    for (String items : StringStringHashMap.keySet()) {
 	    	System.out.println(items+StringStringHashMap.get(items));};
 	    System.out.println("==============================");}
+	/**
+	 * This is to show the list of restaurant
+	 */
 	public void ShowRestaurant(){
-		System.out.println("==========Restauran==========");
+		System.out.println("==========Restaurant==========");
 	    for (String items : StringStringHashMap.keySet()) {
 	    	System.out.println("["+number+"] "+items);number++;};
 	    	number = 1 ;
 	    System.out.println("==============================");}
-	
+	/**
+	 * This is to add menu according to the passed typename
+	 * @param typename
+	 */
 	public void AddRestaurantMenu(String typename) {
 		type=typename;
 		input = new Scanner(System.in);
@@ -294,6 +365,10 @@ public class RestaurantMenu {
 	    RestaurantMenu.put(item,price);	
 	    System.out.println("Your "+type+" menu is saved as:");
 	    ShowRestaurantMenu("=========="+type+" Menu==========");}
+	/**
+	 * This is to make food in food menu to be a set 
+	 * @param FoodMenu
+	 */
 	public void CreateSetFoodMenu(HashMap<String,Double> FoodMenu){
 		input = new Scanner(System.in);
 		StringStringHashMap.keySet().clear();
@@ -312,6 +387,10 @@ public class RestaurantMenu {
 			}
 			RestaurantMenu.put(item,price);
 			ShowRestaurantMenu("==========Preview==========");}}
+	/**
+	 * This is to make drinks in drink menu to be a set
+	 * @param DrinkMenu
+	 */
 	public void CreateSetDrinkMenu(HashMap<String,Double> DrinkMenu){
 		input = new Scanner(System.in);
 		StringStringHashMap.keySet().clear();
@@ -328,23 +407,47 @@ public class RestaurantMenu {
 			System.out.println("Your SetMenu is now being like");
 		}
 	
+	/**
+	 * This is to calculate the total price
+	 * @return total price will be returned
+	 */
 	public double Calculator(){
 	    double total = 0;
 	    for (String items : ReadSelectionMenu().keySet()) {
 	    total=total+	SelectionMenu.get(items);};
 	    return total;
 	}
+	/**
+	 * This is to show the total price on screen
+	 */
 	public void ShowTotal(){
 		System.out.println("Total:\t\t$"+Calculator());
 	}
 
+	/**
+	 * This is to read the drink menu for set
+	 * @return This will return the array for set drink menu
+	 */
 	public String[] ReadSetDrinkMenu(){
 		String [] Restaurant  = new String [RestaurantMenu.size()]; int item = 0 ;for(String items : RestaurantMenu.keySet()){Restaurant[item] = items;item++;};
 	    return Restaurant;}
+	/**
+	 * This is to put the name and price of the selected items to the SelectionMenu
+	 * @param key
+	 * @param value
+	 */
 	public void ReadSelectReadSetDrinkMenu(String key,Double value){
 		SelectionMenu.put(key, value);
 	}
 	
+	/**
+	 * This method is to save the data to the linked OneDrive
+	 * @param oneDrivePath
+	 * @param shopID
+	 * @param text
+	 * @param Menu
+	 * @throws IOException
+	 */
 	public void OutputTextFile(String oneDrivePath,String shopID,String text,String  Menu) throws IOException {
 		switch (text){
 		case "RestaurantMenu":
@@ -365,6 +468,15 @@ public class RestaurantMenu {
 			file.close();break;
 			}
 	}
+	/**
+	 * This method is to load the data from the linked OneDrive
+	 * @param oneDrivePath
+	 * @param shopID
+	 * @param text
+	 * @param Menu
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public void InputTextFile(String oneDrivePath,String shopID,String text,String Menu)throws IOException, ClassNotFoundException{
 		switch (text){
 		case "RestaurantMenu":

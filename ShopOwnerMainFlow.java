@@ -92,6 +92,11 @@ public class ShopOwnerMainFlow extends PreOrder{
 		 }
 		}
 
+	/**
+	 * This is the method to make set menu
+	 * In this method, restaurant owners will select drinks from the drinks menu to combine with food to create set menu
+	 * @throws IOException
+	 */
 	private void LoginSwitchSet() throws IOException{
 		boolean quit = false;
 		 while (quit != true){
@@ -125,6 +130,10 @@ public class ShopOwnerMainFlow extends PreOrder{
 			 }
 		 }
 	}
+	/**
+	 * This is a method to do action to the food menu
+	 * @throws IOException
+	 */
 	private void LoginSwitchFood() throws IOException{
 		boolean quit = false;
 		 while (quit != true){
@@ -150,6 +159,10 @@ public class ShopOwnerMainFlow extends PreOrder{
 			 }
 		 }
 	}
+	/**
+	 * This is a method to do action to the drink menu
+	 * @throws IOException
+	 */
 	private void LoginSwitchDrink() throws IOException{
 		boolean quit = false;
 		 while (quit != true){
@@ -178,7 +191,13 @@ public class ShopOwnerMainFlow extends PreOrder{
 			 }
 		 }
 	}
-	
+	/**
+	 * This is a method that run what restaurant owners are going to operate their restaurants
+	 * This method will check the order made by customers every certain second (default is 10 seconds)
+	 * Therefore restaurant side can receive customers' order in real time and prepare the food
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	private void Operating() throws ClassNotFoundException, IOException{
 		OrderNumber=10000;
 		quit = false;
@@ -220,6 +239,11 @@ public class ShopOwnerMainFlow extends PreOrder{
 		
 		}
 
+	/**
+	 * This is a method for restaurant owners who are new to HereRice to sign up
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public void SignUp() throws IOException, ClassNotFoundException{
 	  selectShop.InputTextFile(OneDrivePath,"", "SelectShop", "");
 	  ShopID=selectShop.EditStringStringHashMap("select",OneDrivePath,"","");
